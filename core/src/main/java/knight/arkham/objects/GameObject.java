@@ -54,18 +54,17 @@ public abstract class GameObject {
     }
 
     public Vector2 getPixelPosition() {
-
         return new Vector2(body.getPosition().x * PIXELS_PER_METER, body.getPosition().y * PIXELS_PER_METER);
     }
 
-    protected Animation<TextureRegion> makeAnimationByRegion(TextureRegion region, int finalFrame, float duration) {
+    protected Animation<TextureRegion> makeAnimationByRegion(TextureRegion region, int finalFrame, float frameDuration) {
 
         Array<TextureRegion> animationFrames = new Array<>();
 
         for (int i = 0; i <= finalFrame; i++)
             animationFrames.add(new TextureRegion(region, i * regionWidth, 0, regionWidth, regionHeight));
 
-        return new Animation<>(duration, animationFrames);
+        return new Animation<>(frameDuration, animationFrames);
     }
 
     public void dispose() {actualRegion.getTexture().dispose();}
