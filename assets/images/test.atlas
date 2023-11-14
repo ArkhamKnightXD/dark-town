@@ -1,0 +1,11 @@
+test.png
+size:512,32
+repeat:none
+dying
+bounds:132,2,128,22
+jumping
+bounds:262,2,128,22
+standing
+bounds:392,2,96,22
+walking
+bounds:2,2,128,22
