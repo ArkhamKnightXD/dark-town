@@ -31,11 +31,11 @@ public class Player extends GameObject {
         previousState = AnimationState.STANDING;
         actualState = AnimationState.STANDING;
 
-        standingAnimation = makeAnimationByFrameRange(atlas.findRegion("standing"), 5, 16, 22);
+        standingAnimation = makeAnimationByRegion(atlas.findRegion("standing"), 5, 0.2f);
 
         jumpingRegion = new TextureRegion(atlas.findRegion("jumping"), 0, 0, 16, 22);
 
-        runningAnimation = makeAnimationByFrameRange(atlas.findRegion("walking"), 8, 16, 22);
+        runningAnimation = makeAnimationByRegion(atlas.findRegion("walking"), 8, 0.1f);
     }
 
     @Override
@@ -119,4 +119,6 @@ public class Player extends GameObject {
             isMovingRight = true;
         }
     }
+
+    public Vector2 getWorldPosition() {return body.getPosition();}
 }

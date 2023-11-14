@@ -8,7 +8,6 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
-
 import static knight.arkham.helpers.Constants.PIXELS_PER_METER;
 
 public abstract class GameObject {
@@ -16,12 +15,17 @@ public abstract class GameObject {
     protected final World actualWorld;
     protected final Body body;
     protected TextureRegion actualRegion;
+    private final int regionWidth;
+    private final int regionHeight;
 
     protected GameObject(Rectangle bounds, World world, TextureRegion region) {
 
         actualBounds = bounds;
         actualWorld = world;
         actualRegion = region;
+
+        regionWidth = region.getRegionWidth();
+        regionHeight = region.getRegionHeight();
 
         body = createBody();
     }
@@ -54,16 +58,14 @@ public abstract class GameObject {
         return new Vector2(body.getPosition().x * PIXELS_PER_METER, body.getPosition().y * PIXELS_PER_METER);
     }
 
-    public Vector2 getWorldPosition() {return body.getPosition();}
-
-    protected Animation<TextureRegion> makeAnimationByFrameRange(TextureRegion characterRegion, int finalFrame, int width, int height) {
+    protected Animation<TextureRegion> makeAnimationByRegion(TextureRegion region, int finalFrame, float duration) {
 
         Array<TextureRegion> animationFrames = new Array<>();
 
         for (int i = 0; i <= finalFrame; i++)
-            animationFrames.add(new TextureRegion(characterRegion, i * width, 0, width, height));
+            animationFrames.add(new TextureRegion(region, i * regionWidth, 0, regionWidth, regionHeight));
 
-        return new Animation<>(0.1f, animationFrames);
+        return new Animation<>(duration, animationFrames);
     }
 
     public void dispose() {actualRegion.getTexture().dispose();}

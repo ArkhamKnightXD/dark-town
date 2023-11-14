@@ -26,7 +26,7 @@ public class Enemy extends GameObject {
 
         isMovingRight = true;
 
-        runningAnimation = makeAnimationByFrameRange(atlas.findRegion("Run-Enemy"), 10, 32, 32);
+        runningAnimation = makeAnimationByRegion(atlas.findRegion("Run-Enemy"), 10, 0.1f);
     }
 
     @Override
