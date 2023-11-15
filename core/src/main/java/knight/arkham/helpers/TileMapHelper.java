@@ -100,16 +100,28 @@ public class TileMapHelper {
 
     public void updateCameraPosition(OrthographicCamera camera) {
 
+        if (Gdx.input.isKeyPressed(Input.Keys.RIGHT))
+            camera.position.x += 0.1f;
+
+        if (Gdx.input.isKeyPressed(Input.Keys.LEFT))
+            camera.position.x -= 0.1f;
+
+        if (Gdx.input.isKeyPressed(Input.Keys.UP))
+            camera.position.y += 0.1f;
+
+        if (Gdx.input.isKeyPressed(Input.Keys.DOWN))
+            camera.position.y -= 0.1f;
+
         if (Gdx.input.isKeyJustPressed(Input.Keys.F3))
-            camera.zoom += 0.2f;
+            camera.zoom += 0.1f;
 
         if (Gdx.input.isKeyJustPressed(Input.Keys.F4))
-            camera.zoom -= 0.2f;
+            camera.zoom -= 0.1f;
 
         boolean isPlayerInsideMapBounds = isPlayerInsideMapBounds(player.getPixelPosition());
 
         if (isPlayerInsideMapBounds)
-            camera.position.set(player.getWorldPosition().x, 8.5f, 0);
+            camera.position.set(player.getWorldPosition().x, 6.8f, 0);
 
         camera.update();
     }
