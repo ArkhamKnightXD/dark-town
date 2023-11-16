@@ -121,7 +121,7 @@ public class TileMapHelper {
         boolean isPlayerInsideMapBounds = isPlayerInsideMapBounds(player.getPixelPosition());
 
         if (isPlayerInsideMapBounds)
-            camera.position.set(player.getWorldPosition().x, 6.8f, 0);
+            camera.position.set(player.getWorldPosition().x, 6, 0);
 
         camera.update();
     }

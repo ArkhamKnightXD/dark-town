@@ -29,7 +29,7 @@ public class Dark extends Game {
 
         viewport = new FitViewport(screenWidth / 32f, screenHeight / 32f, camera);
 
-        camera.zoom -= 0.2f;
+        camera.zoom -= 0.3f;
 
         camera.position.set(screenWidth / 2f / 32f, screenHeight / 2f / 32f, 0);
 
