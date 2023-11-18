@@ -21,13 +21,13 @@ public class GameScreen extends ScreenAdapter {
 
         camera = game.camera;
 
-        World world = new World(new Vector2(0, -60), true);
+        World world = new World(new Vector2(0, -40), true);
 
         world.setContactListener(new GameContactListener());
 
-        TextureAtlas playerAtlas = new TextureAtlas("images/test.atlas");
+        TextureAtlas atlas = new TextureAtlas("images/test.atlas");
 
-        mapHelper = new TileMapHelper("maps/level1.tmx", world, playerAtlas);
+        mapHelper = new TileMapHelper("maps/level1.tmx", world, atlas);
     }
 
     @Override
