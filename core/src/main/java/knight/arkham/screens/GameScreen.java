@@ -2,7 +2,6 @@ package knight.arkham.screens;
 
 import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.ScreenUtils;
@@ -22,12 +21,9 @@ public class GameScreen extends ScreenAdapter {
         camera = game.camera;
 
         World world = new World(new Vector2(0, -40), true);
-
         world.setContactListener(new GameContactListener());
 
-        TextureAtlas atlas = new TextureAtlas("images/test.atlas");
-
-        mapHelper = new TileMapHelper("maps/level1.tmx", world, atlas);
+        mapHelper = new TileMapHelper("maps/level1.tmx", "images/test.atlas", world);
     }
 
     @Override
@@ -52,7 +48,6 @@ public class GameScreen extends ScreenAdapter {
 
     @Override
     public void dispose() {
-
         mapHelper.dispose();
     }
 }

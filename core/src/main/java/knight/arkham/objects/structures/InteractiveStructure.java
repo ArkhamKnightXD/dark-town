@@ -36,4 +36,8 @@ public abstract class InteractiveStructure {
         filter.categoryBits = DESTROYED_BIT;
         fixture.setFilterData(filter);
     }
+
+    public void dispose(){
+        actualRegion.getTexture().dispose();
+    }
 }

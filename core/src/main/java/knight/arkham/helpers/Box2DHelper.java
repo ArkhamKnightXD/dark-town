@@ -133,7 +133,6 @@ public class Box2DHelper {
 
         body.createFixture(fixtureDef).setUserData(box2DBody.userData);
 
-//        Los shapes deben de ser dispose luego de que el fixture se ha creado, si no el programa fallara.
         headCollider.dispose();
     }
 

@@ -21,8 +21,8 @@ public class Box2DBody {
 
     public Box2DBody(Rectangle bounds, World world) {
         this.bounds = bounds;
+        this.world = world;
         this.bodyType = BodyDef.BodyType.StaticBody;
         this.density = 0;
-        this.world = world;
     }
 }

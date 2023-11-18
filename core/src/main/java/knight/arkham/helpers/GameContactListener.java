@@ -3,7 +3,6 @@ package knight.arkham.helpers;
 import com.badlogic.gdx.physics.box2d.*;
 import knight.arkham.objects.Enemy;
 import knight.arkham.objects.structures.Checkpoint;
-
 import static knight.arkham.helpers.Constants.*;
 
 public class GameContactListener implements ContactListener {

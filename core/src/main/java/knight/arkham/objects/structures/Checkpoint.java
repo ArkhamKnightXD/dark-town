@@ -25,16 +25,16 @@ public class Checkpoint extends InteractiveStructure {
             new TextureRegion(atlas.findRegion("No-Flag"), 0, 0, 64, 64)
         );
 
-        animation = makeAnimationByFrameRange(atlas.findRegion("Flag"), 9, 64);
+        animation = makeAnimationByFrameRange(atlas.findRegion("Flag"));
         this.atlas = atlas;
     }
 
-    private Animation<TextureRegion> makeAnimationByFrameRange(TextureRegion characterRegion, int finalFrame, int spriteSize) {
+    private Animation<TextureRegion> makeAnimationByFrameRange(TextureRegion characterRegion) {
 
         Array<TextureRegion> animationFrames = new Array<>();
 
-        for (int i = 0; i <= finalFrame; i++)
-            animationFrames.add(new TextureRegion(characterRegion, i * spriteSize, 0, spriteSize, spriteSize));
+        for (int i = 0; i <= 9; i++)
+            animationFrames.add(new TextureRegion(characterRegion, i * 64, 0, 64, 64));
 
         return new Animation<>(0.1f, animationFrames);
     }
@@ -59,6 +59,13 @@ public class Checkpoint extends InteractiveStructure {
         );
     }
 
+    @Override
+    protected Fixture createFixture() {
+        return Box2DHelper.createStaticFixture(
+            new Box2DBody(actualBounds, 0, actualWorld, this)
+        );
+    }
+
     public void draw(Batch batch) {
 
         Rectangle drawBounds = getDrawBounds();
@@ -71,12 +78,5 @@ public class Checkpoint extends InteractiveStructure {
         collisionWithPlayer();
 
         isActive = true;
-    }
-
-    @Override
-    protected Fixture createFixture() {
-        return Box2DHelper.createStaticFixture(
-            new Box2DBody(actualBounds, 0, actualWorld, this)
-        );
     }
 }

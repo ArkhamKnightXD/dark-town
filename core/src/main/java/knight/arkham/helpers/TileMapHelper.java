@@ -24,22 +24,24 @@ import static knight.arkham.helpers.Constants.MID_SCREEN_WIDTH;
 import static knight.arkham.helpers.Constants.PIXELS_PER_METER;
 
 public class TileMapHelper {
+    private final TiledMap tiledMap;
+    private final TextureAtlas atlas;
     private final World world;
     private final Box2DDebugRenderer debugRenderer;
-    private final TiledMap tiledMap;
     private final OrthogonalTiledMapRenderer mapRenderer;
-    private final TextureAtlas atlas;
     private final Player player;
     private final Array<Enemy> enemies;
     private final Array<Checkpoint> checkpoints;
     private float accumulator;
     private final float TIME_STEP;
 
-    public TileMapHelper(String mapFilePath, World world, TextureAtlas atlas) {
+    public TileMapHelper(String mapFilePath, String atlasFilePath, World world) {
 
         tiledMap = new TmxMapLoader().load(mapFilePath);
+
+        atlas = new TextureAtlas(atlasFilePath);
+
         this.world = world;
-        this.atlas = atlas;
 
         player = new Player(new Rectangle(450, 50, 32, 32), world, atlas);
         enemies = new Array<>();
@@ -153,7 +155,6 @@ public class TileMapHelper {
         }
     }
 
-
     public void draw(OrthographicCamera camera){
 
         mapRenderer.setView(camera);
@@ -181,7 +182,15 @@ public class TileMapHelper {
 
         player.dispose();
         tiledMap.dispose();
+        atlas.dispose();
         mapRenderer.dispose();
         world.dispose();
+        debugRenderer.dispose();
+
+        for (Enemy enemy : enemies)
+            enemy.dispose();
+
+        for (Checkpoint checkpoint : checkpoints)
+            checkpoint.dispose();
     }
 }
