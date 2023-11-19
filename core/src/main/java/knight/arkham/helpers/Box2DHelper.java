@@ -5,6 +5,7 @@ import com.badlogic.gdx.physics.box2d.*;
 import knight.arkham.objects.Enemy;
 import knight.arkham.objects.Player;
 import knight.arkham.objects.structures.Checkpoint;
+
 import static knight.arkham.helpers.Constants.*;
 
 public class Box2DHelper {

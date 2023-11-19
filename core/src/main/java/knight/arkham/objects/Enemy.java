@@ -21,12 +21,12 @@ public class Enemy extends GameObject {
     public Enemy(Rectangle bounds, World world, TextureAtlas atlas) {
         super(
             bounds, world,
-            new TextureRegion(atlas.findRegion("Run-Enemy"), 0, 0, 32, 32)
+            new TextureRegion(atlas.findRegion("enemy"), 0, 0, 15, 11)
         );
 
         isMovingRight = true;
 
-        runningAnimation = makeAnimationByRegion(atlas.findRegion("Run-Enemy"), 10, 0.1f);
+        runningAnimation = makeAnimationByRegion(atlas.findRegion("enemy"), 1, 0.5f);
     }
 
     @Override
