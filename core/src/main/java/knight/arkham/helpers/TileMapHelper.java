@@ -67,8 +67,14 @@ public class TileMapHelper {
 
             Rectangle box2DRectangle = getBox2dRectangle(rectangle);
 
-            if (objectsName.equals("Enemies"))
-                enemies.add(new Enemy(box2DRectangle, world, atlas.findRegion("enemy"), 2));
+            if (objectsName.equals("Enemies")) {
+
+                if (mapObject.getName().equals("blob"))
+                    enemies.add(new Enemy(box2DRectangle, world, atlas.findRegion("enemy"), 2));
+
+                else
+                    enemies.add(new Enemy(box2DRectangle, world, atlas.findRegion("snake"), 2));
+            }
 
             else if (objectsName.equals("Animals")) {
 
@@ -126,8 +132,8 @@ public class TileMapHelper {
         for (Enemy enemy : enemies)
             enemy.update(deltaTime);
 
-        for (Animal cat : animals)
-            cat.update(deltaTime);
+        for (Animal animal : animals)
+            animal.update(deltaTime);
 
         doPhysicsTimeStep(deltaTime);
     }
