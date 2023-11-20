@@ -18,15 +18,16 @@ public class Enemy extends GameObject {
     private boolean setToDestroy;
     private boolean isDestroyed;
 
-    public Enemy(Rectangle bounds, World world, TextureAtlas atlas) {
+    public Enemy(Rectangle bounds, World world, TextureAtlas.AtlasRegion region, int totalFrames) {
         super(
             bounds, world,
-            new TextureRegion(atlas.findRegion("enemy"), 0, 0, 15, 11)
+            new TextureRegion(
+                region, 0, 0,
+                region.getRegionWidth() / totalFrames,
+                region.getRegionHeight())
         );
 
-        isMovingRight = true;
-
-        runningAnimation = makeAnimationByRegion(atlas.findRegion("enemy"), 1, 0.5f);
+        runningAnimation = makeAnimationByRegion(region, totalFrames, 0.5f);
     }
 
     @Override

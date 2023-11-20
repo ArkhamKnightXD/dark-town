@@ -25,13 +25,13 @@ public class Player extends GameObject {
     public Player(Rectangle bounds, World world, TextureAtlas atlas) {
         super(
             bounds, world,
-            new TextureRegion(atlas.findRegion("standing"), 0, 0, 16, 22)
+            new TextureRegion(atlas.findRegion("smoking"), 0, 0, 16, 22)
         );
 
         previousState = AnimationState.STANDING;
         actualState = AnimationState.STANDING;
 
-        standingAnimation = makeAnimationByRegion(atlas.findRegion("standing"), 5, 0.2f);
+        standingAnimation = makeAnimationByRegion(atlas.findRegion("smoking"), 6, 0.2f);
 
         jumpingRegion = new TextureRegion(atlas.findRegion("jumping"), 0, 0, 16, 22);
 
@@ -57,10 +57,10 @@ public class Player extends GameObject {
             applyLinealImpulse(new Vector2(-6, 0));
 
         if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE) && body.getLinearVelocity().y == 0)
-            applyLinealImpulse(new Vector2(0, 170));
+            applyLinealImpulse(new Vector2(0, 150));
     }
 
-    private AnimationState getPlayerCurrentState() {
+    private AnimationState getCurrentAnimationState() {
 
         boolean isPlayerMoving = Gdx.input.isKeyPressed(Input.Keys.A) || Gdx.input.isKeyPressed(Input.Keys.D);
 
@@ -79,7 +79,7 @@ public class Player extends GameObject {
 
     private TextureRegion getAnimationRegion(float deltaTime) {
 
-        actualState = getPlayerCurrentState();
+        actualState = getCurrentAnimationState();
 
         TextureRegion region;
 
@@ -99,7 +99,7 @@ public class Player extends GameObject {
                 region = standingAnimation.getKeyFrame(animationTimer, true);
         }
 
-        flipPlayerOnXAxis(region);
+        flipRegionOnXAxis(region);
 
         animationTimer = actualState == previousState ? animationTimer + deltaTime : 0;
         previousState = actualState;
@@ -107,7 +107,7 @@ public class Player extends GameObject {
         return region;
     }
 
-    private void flipPlayerOnXAxis(TextureRegion region) {
+    private void flipRegionOnXAxis(TextureRegion region) {
 
         if ((body.getLinearVelocity().x < 0 || !isMovingRight) && !region.isFlipX()) {
 

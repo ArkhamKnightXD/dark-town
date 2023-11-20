@@ -57,11 +57,11 @@ public abstract class GameObject {
         return new Vector2(body.getPosition().x * PIXELS_PER_METER, body.getPosition().y * PIXELS_PER_METER);
     }
 
-    protected Animation<TextureRegion> makeAnimationByRegion(TextureRegion region, int finalFrame, float frameDuration) {
+    protected Animation<TextureRegion> makeAnimationByRegion(TextureRegion region, int totalFrames, float frameDuration) {
 
         Array<TextureRegion> animationFrames = new Array<>();
 
-        for (int i = 0; i <= finalFrame; i++)
+        for (int i = 0; i < totalFrames; i++)
             animationFrames.add(new TextureRegion(region, i * regionWidth, 0, regionWidth, regionHeight));
 
         return new Animation<>(frameDuration, animationFrames);
