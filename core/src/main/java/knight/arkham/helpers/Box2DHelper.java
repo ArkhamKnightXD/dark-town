@@ -2,6 +2,7 @@ package knight.arkham.helpers;
 
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
+import knight.arkham.objects.Animal;
 import knight.arkham.objects.Enemy;
 import knight.arkham.objects.Player;
 import knight.arkham.objects.structures.Checkpoint;
@@ -60,6 +61,13 @@ public class Box2DHelper {
         else if (box2DBody.userData instanceof Enemy)
             createEnemyBody(box2DBody, fixtureDef, body);
 
+        else if (box2DBody.userData instanceof Animal) {
+
+            fixtureDef.filter.categoryBits = ANIMAL_BIT;
+
+            body.createFixture(fixtureDef);
+        }
+
         else {
 
             fixtureDef.filter.categoryBits = GROUND_BIT;
@@ -79,25 +87,9 @@ public class Box2DHelper {
         FixtureDef fixtureDef = new FixtureDef();
 
         fixtureDef.shape = shape;
-
         fixtureDef.density = box2DBody.density;
+
         return fixtureDef;
-    }
-
-    private static EdgeShape getPlayerHeadCollider(FixtureDef fixtureDefinition) {
-
-        EdgeShape headCollider = new EdgeShape();
-
-        headCollider.set(new Vector2(-15 / PIXELS_PER_METER, 19 / PIXELS_PER_METER),
-            new Vector2(15 / PIXELS_PER_METER, 19 / PIXELS_PER_METER));
-
-        fixtureDefinition.shape = headCollider;
-
-        fixtureDefinition.isSensor = true;
-
-        fixtureDefinition.filter.categoryBits = MARIO_HEAD_BIT;
-
-        return headCollider;
     }
 
     private static void createPlayerBody(Box2DBody box2DBody, FixtureDef fixtureDef, Body body) {
@@ -117,6 +109,22 @@ public class Box2DHelper {
         headCollider.dispose();
     }
 
+    private static EdgeShape getPlayerHeadCollider(FixtureDef fixtureDef) {
+
+        EdgeShape headCollider = new EdgeShape();
+
+        headCollider.set(
+            new Vector2(-15 / PIXELS_PER_METER, 19 / PIXELS_PER_METER),
+            new Vector2(15 / PIXELS_PER_METER, 19 / PIXELS_PER_METER)
+        );
+
+        fixtureDef.shape = headCollider;
+        fixtureDef.filter.categoryBits = PLAYER_HEAD_BIT;
+        fixtureDef.isSensor = true;
+
+        return headCollider;
+    }
+
     private static void createEnemyBody(Box2DBody box2DBody, FixtureDef fixtureDef, Body body) {
 
         fixtureDef.filter.categoryBits = ENEMY_BIT;
@@ -128,7 +136,6 @@ public class Box2DHelper {
         PolygonShape headCollider = getEnemyHeadHeadCollider();
 
         fixtureDef.shape = headCollider;
-
         fixtureDef.restitution = 1;
         fixtureDef.filter.categoryBits = ENEMY_HEAD_BIT;
 
