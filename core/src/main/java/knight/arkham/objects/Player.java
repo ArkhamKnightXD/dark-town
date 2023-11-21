@@ -50,14 +50,14 @@ public class Player extends GameObject {
 
         actualRegion = getAnimationRegion(deltaTime);
 
-        if (Gdx.input.isKeyPressed(Input.Keys.D) && body.getLinearVelocity().x <= 8)
-            applyLinealImpulse(new Vector2(6, 0));
+        if (Gdx.input.isKeyPressed(Input.Keys.D) && body.getLinearVelocity().x <= 6)
+            applyLinealImpulse(new Vector2(4, 0));
 
-        else if (Gdx.input.isKeyPressed(Input.Keys.A) && body.getLinearVelocity().x >= -8)
-            applyLinealImpulse(new Vector2(-6, 0));
+        else if (Gdx.input.isKeyPressed(Input.Keys.A) && body.getLinearVelocity().x >= -6)
+            applyLinealImpulse(new Vector2(-4, 0));
 
         if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE) && body.getLinearVelocity().y == 0)
-            applyLinealImpulse(new Vector2(0, 150));
+            applyLinealImpulse(new Vector2(0, 140));
     }
 
     private AnimationState getCurrentAnimationState() {
