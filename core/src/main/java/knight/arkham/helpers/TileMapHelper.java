@@ -1,5 +1,6 @@
 package knight.arkham.helpers;
 
+import box2dLight.RayHandler;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -12,6 +13,7 @@ import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
@@ -25,6 +27,7 @@ public class TileMapHelper {
     private final TiledMap tiledMap;
     private final TextureAtlas atlas;
     private final World world;
+    private final RayHandler rayHandler;
     private final Box2DDebugRenderer debugRenderer;
     private final OrthogonalTiledMapRenderer mapRenderer;
     private final Player player;
@@ -41,13 +44,18 @@ public class TileMapHelper {
 
         this.world = world;
 
+        rayHandler = new RayHandler(world);
+        rayHandler.setAmbientLight(.2f);
+
         player = new Player(new Rectangle(20, 50, 32, 32), world, atlas);
+
         enemies = new Array<>();
         animals = new Array<>();
 
         mapRenderer = setupMap();
 
         debugRenderer = new Box2DDebugRenderer();
+
         TIME_STEP = 1/240f;
     }
 
@@ -67,26 +75,42 @@ public class TileMapHelper {
 
             Rectangle box2DRectangle = getBox2dRectangle(rectangle);
 
-            if (objectsName.equals("Enemies")) {
+            switch (objectsName) {
 
-                if (mapObject.getName().equals("blob"))
-                    enemies.add(new Enemy(box2DRectangle, world, atlas.findRegion("enemy"), 2));
+                case "Enemies":
 
-                else
-                    enemies.add(new Enemy(box2DRectangle, world, atlas.findRegion("snake"), 2));
+                    if (mapObject.getName().equals("blob"))
+                        enemies.add(new Enemy(box2DRectangle, world, atlas.findRegion("enemy"), 2));
+
+                    else
+                        enemies.add(new Enemy(box2DRectangle, world, atlas.findRegion("snake"), 2));
+                    break;
+
+                case "Animals":
+
+                    if (mapObject.getName().equals("cat"))
+                        animals.add(new Animal(box2DRectangle, world, atlas.findRegion("cat"), 3));
+
+                    else
+                        animals.add(new Animal(box2DRectangle, world, atlas.findRegion("bats"), 2));
+                    break;
+
+                case "Lights":
+
+                    Vector2 lightPosition = Box2DHelper.createBody(new Box2DBody(box2DRectangle, world)).getPosition();
+
+                    if (mapObject.getName().equals("cone"))
+                        LightHelper.createConeLight(rayHandler, lightPosition);
+
+                    else
+                        LightHelper.createPointLight(rayHandler, lightPosition);
+
+                    break;
+
+                default:
+                    Box2DHelper.createBody(new Box2DBody(box2DRectangle, world));
+                    break;
             }
-
-            else if (objectsName.equals("Animals")) {
-
-                if (mapObject.getName().equals("cat"))
-                    animals.add(new Animal(box2DRectangle, world, atlas.findRegion("cat"), 3));
-
-                else
-                    animals.add(new Animal(box2DRectangle, world, atlas.findRegion("bats"), 2));
-            }
-
-            else
-                Box2DHelper.createBody(new Box2DBody(box2DRectangle, world));
         }
     }
 
@@ -123,7 +147,10 @@ public class TileMapHelper {
         camera.update();
     }
 
-    public void update(float deltaTime, OrthographicCamera camera){
+    public void update(float deltaTime, OrthographicCamera camera) {
+
+        //I also have call the rayHandler update method for everything to work accordingly.
+        rayHandler.update();
 
         player.update(deltaTime);
 
@@ -171,6 +198,10 @@ public class TileMapHelper {
         mapRenderer.getBatch().end();
 
 //        debugRenderer.render(world, camera.combined);
+
+        rayHandler.setCombinedMatrix(camera);
+        //The render method of the rayHandler should be put after all the others objects
+        rayHandler.render();
     }
 
     public void dispose(){
@@ -180,6 +211,7 @@ public class TileMapHelper {
         atlas.dispose();
         mapRenderer.dispose();
         world.dispose();
+        rayHandler.dispose();
         debugRenderer.dispose();
 
         for (Enemy enemy : enemies)
