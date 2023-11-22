@@ -71,9 +71,7 @@ public class TileMapHelper {
 
         for (MapObject mapObject : mapObjects) {
 
-            Rectangle rectangle = ((RectangleMapObject) mapObject).getRectangle();
-
-            Rectangle box2DRectangle = getBox2dRectangle(rectangle);
+            Rectangle box2DRectangle = getBox2dRectangle(((RectangleMapObject) mapObject).getRectangle());
 
             switch (objectsName) {
 
@@ -97,14 +95,11 @@ public class TileMapHelper {
 
                 case "Lights":
 
-                    Vector2 lightPosition = Box2DHelper.createBody(new Box2DBody(box2DRectangle, world)).getPosition();
-
                     if (mapObject.getName().equals("cone"))
-                        LightHelper.createConeLight(rayHandler, lightPosition);
+                        LightHelper.createConeLight(rayHandler, new Vector2(box2DRectangle.x, box2DRectangle.y));
 
                     else
-                        LightHelper.createPointLight(rayHandler, lightPosition);
-
+                        LightHelper.createPointLight(rayHandler, new Vector2(box2DRectangle.x, box2DRectangle.y));
                     break;
 
                 default:
