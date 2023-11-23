@@ -52,6 +52,8 @@ public class TileMapHelper {
 
         player = new Player(new Rectangle(20, 50, 32, 32), world, atlas);
 
+        GameDataHelper.saveGameData(new GameData("first", player.getWorldPosition()));
+
         enemies = new Array<>();
         animals = new Array<>();
         checkpoints = new Array<>();

@@ -18,7 +18,7 @@ public abstract class InteractiveStructure {
     protected final World actualWorld;
     protected TextureRegion actualRegion;
     protected final Fixture fixture;
-    private final Body body;
+    protected final Body body;
     private final int regionWidth;
     private final int regionHeight;
 

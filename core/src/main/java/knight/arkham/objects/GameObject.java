@@ -10,6 +10,8 @@ import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
 import knight.arkham.helpers.Box2DHelper;
 
+import static knight.arkham.helpers.Constants.PIXELS_PER_METER;
+
 public abstract class GameObject {
     protected final Rectangle actualBounds;
     protected final World actualWorld;
@@ -51,6 +53,10 @@ public abstract class GameObject {
             animationFrames.add(new TextureRegion(region, i * regionWidth, 0, regionWidth, regionHeight));
 
         return new Animation<>(frameDuration, animationFrames);
+    }
+
+    protected Vector2 getPixelPosition() {
+        return body.getPosition().scl(PIXELS_PER_METER);
     }
 
     public void dispose() {actualRegion.getTexture().dispose();}

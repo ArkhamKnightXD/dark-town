@@ -11,8 +11,6 @@ import com.badlogic.gdx.physics.box2d.World;
 import knight.arkham.helpers.Box2DBody;
 import knight.arkham.helpers.Box2DHelper;
 
-import static knight.arkham.helpers.Constants.PIXELS_PER_METER;
-
 public class Enemy extends GameObject {
     private final Animation<TextureRegion> runningAnimation;
     private float stateTimer;
@@ -40,12 +38,10 @@ public class Enemy extends GameObject {
         );
     }
 
-    private void destroyEnemy() {
+    private void destroyBody() {
 
         actualWorld.destroyBody(body);
         isDestroyed = true;
-
-        stateTimer = 0;
     }
 
     public void update(float deltaTime) {
@@ -53,7 +49,7 @@ public class Enemy extends GameObject {
         stateTimer += deltaTime;
 
         if (setToDestroy && !isDestroyed)
-            destroyEnemy();
+            destroyBody();
 
         else if (!isDestroyed) {
 
@@ -70,13 +66,9 @@ public class Enemy extends GameObject {
         }
     }
 
-    private Vector2 getPixelPosition() {
-        return body.getPosition().scl(PIXELS_PER_METER);
-    }
-
     @Override
     public void draw(Batch batch) {
-        if (!isDestroyed || stateTimer < 1)
+        if (!isDestroyed)
             super.draw(batch);
     }
 

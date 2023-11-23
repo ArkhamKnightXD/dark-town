@@ -11,6 +11,7 @@ import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.World;
 import knight.arkham.helpers.Box2DBody;
 import knight.arkham.helpers.Box2DHelper;
+import knight.arkham.helpers.GameDataHelper;
 
 public class Player extends GameObject {
     private enum AnimationState {FALLING, JUMPING, STANDING, RUNNING}
@@ -58,6 +59,20 @@ public class Player extends GameObject {
 
         if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE) && body.getLinearVelocity().y == 0)
             applyLinealImpulse(new Vector2(0, 140));
+
+        playerFallToDead();
+    }
+
+    private void playerFallToDead() {
+
+        if (getPixelPosition().y < -100) {
+
+            body.setLinearVelocity(0, 0);
+
+            Vector2 position = GameDataHelper.loadGameData().position;
+
+            body.setTransform(position, 0);
+        }
     }
 
     private AnimationState getCurrentAnimationState() {
