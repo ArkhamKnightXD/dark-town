@@ -75,4 +75,8 @@ public class Enemy extends GameObject {
     public void changeDirection(){
         isMovingRight = !isMovingRight;
     }
+
+    public void hitByPlayer(){
+        setToDestroy = true;
+    }
 }
