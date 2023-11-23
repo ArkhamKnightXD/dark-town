@@ -1,5 +1,6 @@
 package knight.arkham.helpers;
 
+import box2dLight.ConeLight;
 import box2dLight.RayHandler;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
@@ -33,15 +34,15 @@ public class TileMapHelper {
     private final Player player;
     private final Array<Enemy> enemies;
     private final Array<Animal> animals;
+    private final Array<ConeLight> coneLights;
     private float accumulator;
     private final float TIME_STEP;
+    private float stateTimer;
 
     public TileMapHelper(String mapFilePath, String atlasFilePath, World world) {
 
         tiledMap = new TmxMapLoader().load(mapFilePath);
-
         atlas = new TextureAtlas(atlasFilePath);
-
         this.world = world;
 
         rayHandler = new RayHandler(world);
@@ -51,9 +52,9 @@ public class TileMapHelper {
 
         enemies = new Array<>();
         animals = new Array<>();
+        coneLights = new Array<>();
 
         mapRenderer = setupMap();
-
         debugRenderer = new Box2DDebugRenderer();
 
         TIME_STEP = 1/240f;
@@ -96,7 +97,7 @@ public class TileMapHelper {
                 case "Lights":
 
                     if (mapObject.getName().equals("cone"))
-                        LightHelper.createConeLight(rayHandler, new Vector2(box2DRectangle.x, box2DRectangle.y));
+                        coneLights.add(LightHelper.createConeLight(rayHandler, new Vector2(box2DRectangle.x, box2DRectangle.y)));
 
                     else
                         LightHelper.createPointLight(rayHandler, new Vector2(box2DRectangle.x, box2DRectangle.y));
@@ -156,6 +157,16 @@ public class TileMapHelper {
 
         for (Animal animal : animals)
             animal.update(deltaTime);
+
+        stateTimer += deltaTime;
+
+        if (stateTimer > 2) {
+
+            stateTimer = 0;
+
+            for (ConeLight light : coneLights)
+                light.setActive(!light.isActive());
+        }
 
         doPhysicsTimeStep(deltaTime);
     }

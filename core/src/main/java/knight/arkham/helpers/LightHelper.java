@@ -10,11 +10,11 @@ import static knight.arkham.helpers.Constants.PIXELS_PER_METER;
 
 public class LightHelper {
 
-    public static void createConeLight(RayHandler rayHandler, Vector2 position) {
+    public static ConeLight createConeLight(RayHandler rayHandler, Vector2 position) {
 
         position.scl(1 / PIXELS_PER_METER);
 
-        new ConeLight(rayHandler, 10, WHITE, 10, position.x, position.y, -90, 30);
+        return new ConeLight(rayHandler, 10, WHITE, 10, position.x, position.y, -90, 30);
     }
 
     public static void createPointLight(RayHandler rayHandler, Vector2 position) {
