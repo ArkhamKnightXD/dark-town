@@ -11,6 +11,8 @@ import com.badlogic.gdx.physics.box2d.World;
 import knight.arkham.helpers.Box2DBody;
 import knight.arkham.helpers.Box2DHelper;
 
+import static knight.arkham.helpers.Constants.PIXELS_PER_METER;
+
 public class Enemy extends GameObject {
     private final Animation<TextureRegion> runningAnimation;
     private float stateTimer;
@@ -66,6 +68,10 @@ public class Enemy extends GameObject {
             if (getPixelPosition().y < -50)
                 setToDestroy = true;
         }
+    }
+
+    private Vector2 getPixelPosition() {
+        return body.getPosition().scl(PIXELS_PER_METER);
     }
 
     @Override

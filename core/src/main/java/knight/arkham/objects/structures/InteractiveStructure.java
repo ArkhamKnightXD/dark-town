@@ -16,16 +16,15 @@ public abstract class InteractiveStructure {
     protected final World actualWorld;
     protected TextureRegion actualRegion;
     protected final Fixture fixture;
-    protected final Body body;
+    private final Body body;
 
-    public InteractiveStructure(Rectangle rectangle, World world, TextureRegion region) {
+    public InteractiveStructure(Rectangle bounds, World world, TextureRegion region) {
 
-        actualBounds = rectangle;
+        actualBounds = bounds;
         actualWorld = world;
         actualRegion = region;
 
         fixture = createFixture();
-
         body = fixture.getBody();
     }
 

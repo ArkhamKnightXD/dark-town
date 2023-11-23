@@ -14,8 +14,8 @@ import static knight.arkham.helpers.Constants.PIXELS_PER_METER;
 public abstract class GameObject {
     protected final Rectangle actualBounds;
     protected final World actualWorld;
-    protected final Body body;
     protected TextureRegion actualRegion;
+    protected final Body body;
     private final int regionWidth;
     private final int regionHeight;
 
@@ -52,10 +52,6 @@ public abstract class GameObject {
 
     protected void applyLinealImpulse(Vector2 impulseDirection) {
         body.applyLinearImpulse(impulseDirection, body.getWorldCenter(), true);
-    }
-
-    public Vector2 getPixelPosition() {
-        return new Vector2(body.getPosition().x * PIXELS_PER_METER, body.getPosition().y * PIXELS_PER_METER);
     }
 
     protected Animation<TextureRegion> makeAnimationByRegion(TextureRegion region, int totalFrames, float frameDuration) {
