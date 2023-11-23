@@ -1,5 +1,6 @@
 package knight.arkham.helpers;
 
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 import knight.arkham.objects.Animal;
@@ -158,5 +159,15 @@ public class Box2DHelper {
         head.set(vertices);
 
         return head;
+    }
+
+    public static Rectangle getDrawBounds(Body body, Rectangle bounds) {
+
+        return new Rectangle(
+            body.getPosition().x - (bounds.width / 2 / PIXELS_PER_METER),
+            body.getPosition().y - (bounds.height / 2 / PIXELS_PER_METER),
+            bounds.width / PIXELS_PER_METER,
+            bounds.height / PIXELS_PER_METER
+        );
     }
 }

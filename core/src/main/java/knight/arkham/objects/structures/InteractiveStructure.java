@@ -1,5 +1,6 @@
 package knight.arkham.objects.structures;
 
+import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
@@ -7,9 +8,10 @@ import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.Filter;
 import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.World;
+import com.badlogic.gdx.utils.Array;
+import knight.arkham.helpers.Box2DHelper;
 
 import static knight.arkham.helpers.Constants.DESTROYED_BIT;
-import static knight.arkham.helpers.Constants.PIXELS_PER_METER;
 
 public abstract class InteractiveStructure {
     protected final Rectangle actualBounds;
@@ -17,6 +19,8 @@ public abstract class InteractiveStructure {
     protected TextureRegion actualRegion;
     protected final Fixture fixture;
     private final Body body;
+    private final int regionWidth;
+    private final int regionHeight;
 
     public InteractiveStructure(Rectangle bounds, World world, TextureRegion region) {
 
@@ -24,25 +28,28 @@ public abstract class InteractiveStructure {
         actualWorld = world;
         actualRegion = region;
 
+        regionWidth = region.getRegionWidth();
+        regionHeight = region.getRegionHeight();
+
         fixture = createFixture();
         body = fixture.getBody();
     }
 
     protected abstract Fixture createFixture();
 
-    private Rectangle getDrawBounds() {
+    protected Animation<TextureRegion> makeAnimationByRegion(TextureRegion region, int totalFrames) {
 
-        return new Rectangle(
-            body.getPosition().x - (actualBounds.width / 2 / PIXELS_PER_METER),
-            body.getPosition().y - (actualBounds.height / 2 / PIXELS_PER_METER),
-            actualBounds.width / PIXELS_PER_METER,
-            actualBounds.height / PIXELS_PER_METER
-        );
+        Array<TextureRegion> animationFrames = new Array<>();
+
+        for (int i = 0; i < totalFrames; i++)
+            animationFrames.add(new TextureRegion(region, i * regionWidth, 0, regionWidth, regionHeight));
+
+        return new Animation<>(0.5f, animationFrames);
     }
 
     public void draw(Batch batch) {
 
-        Rectangle drawBounds = getDrawBounds();
+        Rectangle drawBounds = Box2DHelper.getDrawBounds(body, actualBounds);
 
         batch.draw(actualRegion, drawBounds.x, drawBounds.y, drawBounds.width, drawBounds.height);
     }

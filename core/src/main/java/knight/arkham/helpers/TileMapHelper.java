@@ -21,6 +21,7 @@ import com.badlogic.gdx.utils.Array;
 import knight.arkham.objects.Animal;
 import knight.arkham.objects.Enemy;
 import knight.arkham.objects.Player;
+import knight.arkham.objects.structures.Checkpoint;
 
 import static knight.arkham.helpers.Constants.PIXELS_PER_METER;
 
@@ -34,6 +35,7 @@ public class TileMapHelper {
     private final Player player;
     private final Array<Enemy> enemies;
     private final Array<Animal> animals;
+    private final Array<Checkpoint> checkpoints;
     private final Array<ConeLight> coneLights;
     private float accumulator;
     private final float TIME_STEP;
@@ -52,6 +54,8 @@ public class TileMapHelper {
 
         enemies = new Array<>();
         animals = new Array<>();
+        checkpoints = new Array<>();
+
         coneLights = new Array<>();
 
         mapRenderer = setupMap();
@@ -101,6 +105,11 @@ public class TileMapHelper {
 
                     else
                         LightHelper.createPointLight(rayHandler, new Vector2(box2DRectangle.x, box2DRectangle.y));
+                    break;
+
+                case "Checkpoints":
+
+                    checkpoints.add(new Checkpoint(box2DRectangle, world, atlas.findRegion("checkpoint"), 2));
                     break;
 
                 default:
@@ -158,6 +167,9 @@ public class TileMapHelper {
         for (Animal animal : animals)
             animal.update(deltaTime);
 
+        for (Checkpoint checkpoint : checkpoints)
+            checkpoint.update(deltaTime);
+
         stateTimer += deltaTime;
 
         if (stateTimer > 2) {
@@ -198,8 +210,11 @@ public class TileMapHelper {
         for (Enemy enemy : enemies)
             enemy.draw(mapRenderer.getBatch());
 
-        for (Animal cat : animals)
-            cat.draw(mapRenderer.getBatch());
+        for (Animal animal : animals)
+            animal.draw(mapRenderer.getBatch());
+
+        for (Checkpoint checkpoint : checkpoints)
+            checkpoint.draw(mapRenderer.getBatch());
 
         mapRenderer.getBatch().end();
 
@@ -225,5 +240,8 @@ public class TileMapHelper {
 
         for (Animal cat : animals)
             cat.dispose();
+
+        for (Checkpoint checkpoint : checkpoints)
+            checkpoint.dispose();
     }
 }

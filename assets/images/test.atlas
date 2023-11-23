@@ -5,6 +5,8 @@ bats
 bounds:638,11,35,13
 cat
 bounds:588,12,48,12
+checkpoint
+bounds:740,13,24,11
 dying
 bounds:132,2,128,22
 enemy
