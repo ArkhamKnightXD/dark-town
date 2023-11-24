@@ -49,7 +49,7 @@ public class Player extends GameObject {
 
     public void update(float deltaTime) {
 
-        actualRegion = getAnimationRegion(deltaTime);
+        getAnimationRegion(deltaTime);
 
         if (Gdx.input.isKeyPressed(Input.Keys.D) && body.getLinearVelocity().x <= 6)
             applyLinealImpulse(new Vector2(4, 0));
@@ -92,34 +92,30 @@ public class Player extends GameObject {
             return AnimationState.STANDING;
     }
 
-    private TextureRegion getAnimationRegion(float deltaTime) {
+    private void getAnimationRegion(float deltaTime) {
 
         actualState = getCurrentAnimationState();
-
-        TextureRegion region;
 
         switch (actualState) {
 
             case JUMPING:
-                region = jumpingRegion;
+                actualRegion = jumpingRegion;
                 break;
 
             case RUNNING:
-                region = runningAnimation.getKeyFrame(animationTimer, true);
+                actualRegion = runningAnimation.getKeyFrame(animationTimer, true);
                 break;
 
             case FALLING:
             case STANDING:
             default:
-                region = standingAnimation.getKeyFrame(animationTimer, true);
+                actualRegion = standingAnimation.getKeyFrame(animationTimer, true);
         }
 
-        flipRegionOnXAxis(region);
+        flipRegionOnXAxis(actualRegion);
 
         animationTimer = actualState == previousState ? animationTimer + deltaTime : 0;
         previousState = actualState;
-
-        return region;
     }
 
     private void flipRegionOnXAxis(TextureRegion region) {

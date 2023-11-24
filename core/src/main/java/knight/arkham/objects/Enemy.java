@@ -55,6 +55,8 @@ public class Enemy extends GameObject {
 
             actualRegion = runningAnimation.getKeyFrame(stateTimer, true);
 
+            flipRegionOnXAxis(actualRegion);
+
             if (isMovingRight && body.getLinearVelocity().x <= 4)
                 applyLinealImpulse(new Vector2(2, 0));
 
@@ -70,6 +72,19 @@ public class Enemy extends GameObject {
     public void draw(Batch batch) {
         if (!isDestroyed)
             super.draw(batch);
+    }
+
+    private void flipRegionOnXAxis(TextureRegion region) {
+
+        if ((body.getLinearVelocity().x < 0 || !isMovingRight) && region.isFlipX()) {
+
+            region.flip(true, false);
+            isMovingRight = false;
+        } else if ((body.getLinearVelocity().x > 0 || isMovingRight) && !region.isFlipX()) {
+
+            region.flip(true, false);
+            isMovingRight = true;
+        }
     }
 
     public void changeDirection(){

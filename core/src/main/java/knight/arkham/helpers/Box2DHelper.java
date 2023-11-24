@@ -22,7 +22,7 @@ public class Box2DHelper {
             fixtureDef.filter.categoryBits = CHECKPOINT_BIT;
 
         else
-            fixtureDef.filter.categoryBits = BRICK_BIT;
+            fixtureDef.filter.categoryBits = STOP_ENEMY_BIT;
 
         Body body = createBox2DBodyByType(box2DBody);
 
@@ -130,7 +130,7 @@ public class Box2DHelper {
 
         fixtureDef.filter.categoryBits = ENEMY_BIT;
 
-        fixtureDef.filter.maskBits = (short) (GROUND_BIT | BRICK_BIT | ENEMY_BIT | PLAYER_BIT);
+        fixtureDef.filter.maskBits = (short) (GROUND_BIT | STOP_ENEMY_BIT | ENEMY_BIT | PLAYER_BIT);
 
         body.createFixture(fixtureDef).setUserData(box2DBody.userData);
 
@@ -151,10 +151,10 @@ public class Box2DHelper {
 
         Vector2[] vertices = new Vector2[4];
 
-        vertices[0] = new Vector2(-15, 22).scl(1 / PIXELS_PER_METER);
-        vertices[1] = new Vector2(15, 22).scl(1 / PIXELS_PER_METER);
-        vertices[2] = new Vector2(-13, 17).scl(1 / PIXELS_PER_METER);
-        vertices[3] = new Vector2(13, 17).scl(1 / PIXELS_PER_METER);
+        vertices[0] = new Vector2(-10, 15).scl(1 / PIXELS_PER_METER);
+        vertices[1] = new Vector2(10, 15).scl(1 / PIXELS_PER_METER);
+        vertices[2] = new Vector2(-10, 12).scl(1 / PIXELS_PER_METER);
+        vertices[3] = new Vector2(10, 12).scl(1 / PIXELS_PER_METER);
 
         head.set(vertices);
 

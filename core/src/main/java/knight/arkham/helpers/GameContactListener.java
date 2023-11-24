@@ -27,7 +27,7 @@ public class GameContactListener implements ContactListener {
                     ((Checkpoint) fixtureB.getUserData()).createCheckpoint();
                 break;
 
-            case ENEMY_BIT | BRICK_BIT:
+            case ENEMY_BIT | STOP_ENEMY_BIT:
 
                 if (fixtureA.getFilterData().categoryBits == ENEMY_BIT)
                     ((Enemy) fixtureA.getUserData()).changeDirection();

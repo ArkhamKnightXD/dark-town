@@ -78,50 +78,57 @@ public class TileMapHelper {
 
         for (MapObject mapObject : mapObjects) {
 
-            Rectangle box2DRectangle = getBox2dRectangle(((RectangleMapObject) mapObject).getRectangle());
+            Rectangle mapRectangle = getTileMapRectangle(((RectangleMapObject) mapObject).getRectangle());
 
             switch (objectsName) {
 
                 case "Enemies":
 
                     if (mapObject.getName().equals("blob"))
-                        enemies.add(new Enemy(box2DRectangle, world, atlas.findRegion("enemy"), 2));
+                        enemies.add(new Enemy(mapRectangle, world, atlas.findRegion("enemy"), 2));
 
                     else
-                        enemies.add(new Enemy(box2DRectangle, world, atlas.findRegion("snake"), 2));
+                        enemies.add(new Enemy(mapRectangle, world, atlas.findRegion("snake"), 2));
                     break;
 
                 case "Animals":
 
                     if (mapObject.getName().equals("cat"))
-                        animals.add(new Animal(box2DRectangle, world, atlas.findRegion("cat"), 3));
+                        animals.add(new Animal(mapRectangle, world, atlas.findRegion("cat"), 3));
 
                     else
-                        animals.add(new Animal(box2DRectangle, world, atlas.findRegion("bats"), 2));
+                        animals.add(new Animal(mapRectangle, world, atlas.findRegion("bats"), 2));
                     break;
 
                 case "Lights":
 
+                    Vector2 lightPosition = new Vector2(mapRectangle.x, mapRectangle.y);
+
                     if (mapObject.getName().equals("cone"))
-                        coneLights.add(LightHelper.createConeLight(rayHandler, new Vector2(box2DRectangle.x, box2DRectangle.y)));
+                        coneLights.add(LightHelper.createConeLight(rayHandler, lightPosition));
 
                     else
-                        LightHelper.createPointLight(rayHandler, new Vector2(box2DRectangle.x, box2DRectangle.y));
+                        LightHelper.createPointLight(rayHandler, lightPosition);
                     break;
 
                 case "Checkpoints":
 
-                    checkpoints.add(new Checkpoint(box2DRectangle, world, atlas.findRegion("checkpoint"), 2));
+                    checkpoints.add(new Checkpoint(mapRectangle, world, atlas.findRegion("checkpoint"), 2));
+                    break;
+
+                case "Stop-Enemy":
+
+                    Box2DHelper.createStaticFixture(new Box2DBody(mapRectangle, world));
                     break;
 
                 default:
-                    Box2DHelper.createBody(new Box2DBody(box2DRectangle, world));
+                    Box2DHelper.createBody(new Box2DBody(mapRectangle, world));
                     break;
             }
         }
     }
 
-    private Rectangle getBox2dRectangle(Rectangle rectangle){
+    private Rectangle getTileMapRectangle(Rectangle rectangle){
         return new Rectangle(
             rectangle.x + rectangle.width / 2,
             rectangle.y + rectangle.height / 2,
