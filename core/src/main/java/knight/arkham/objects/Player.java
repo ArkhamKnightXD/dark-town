@@ -14,14 +14,16 @@ import knight.arkham.helpers.Box2DHelper;
 import knight.arkham.helpers.GameDataHelper;
 
 public class Player extends GameObject {
-    private enum AnimationState {FALLING, JUMPING, STANDING, RUNNING}
+    private enum AnimationState {FALLING, JUMPING, STANDING, RUNNING, DYING}
     private AnimationState actualState;
     private AnimationState previousState;
     private final TextureRegion jumpingRegion;
     private final Animation<TextureRegion> standingAnimation;
     private final Animation<TextureRegion> runningAnimation;
+    private final Animation<TextureRegion> dyingAnimation;
     private float animationTimer;
     private boolean isMovingRight;
+    private boolean isDead;
 
     public Player(Rectangle bounds, World world, TextureAtlas atlas) {
         super(
@@ -32,11 +34,11 @@ public class Player extends GameObject {
         previousState = AnimationState.STANDING;
         actualState = AnimationState.STANDING;
 
-        standingAnimation = makeAnimationByRegion(atlas.findRegion("smoking"), 6, 0.2f);
-
         jumpingRegion = new TextureRegion(atlas.findRegion("jumping"), 0, 0, 16, 22);
 
+        standingAnimation = makeAnimationByRegion(atlas.findRegion("smoking"), 6, 0.2f);
         runningAnimation = makeAnimationByRegion(atlas.findRegion("walking"), 8, 0.1f);
+        dyingAnimation = makeAnimationByRegion(atlas.findRegion("dying"), 8, 0.1f);
     }
 
     @Override
@@ -88,6 +90,9 @@ public class Player extends GameObject {
         else if (body.getLinearVelocity().y < 0)
             return AnimationState.FALLING;
 
+        else if (isDead)
+            return AnimationState.DYING;
+
         else
             return AnimationState.STANDING;
     }
@@ -104,6 +109,10 @@ public class Player extends GameObject {
 
             case RUNNING:
                 actualRegion = runningAnimation.getKeyFrame(animationTimer, true);
+                break;
+
+            case DYING:
+                actualRegion = dyingAnimation.getKeyFrame(animationTimer, false);
                 break;
 
             case FALLING:
@@ -132,4 +141,8 @@ public class Player extends GameObject {
     }
 
     public Vector2 getWorldPosition() {return body.getPosition();}
+
+    public void getHitByEnemy() {
+        isDead = true;
+    }
 }

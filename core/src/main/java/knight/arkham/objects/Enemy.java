@@ -62,9 +62,6 @@ public class Enemy extends GameObject {
 
             else if (!isMovingRight && body.getLinearVelocity().x >= -4)
                 applyLinealImpulse(new Vector2(-2, 0));
-
-            if (getPixelPosition().y < -50)
-                setToDestroy = true;
         }
     }
 

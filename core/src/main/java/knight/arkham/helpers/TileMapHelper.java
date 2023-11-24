@@ -116,7 +116,7 @@ public class TileMapHelper {
                     checkpoints.add(new Checkpoint(mapRectangle, world, atlas.findRegion("checkpoint"), 2));
                     break;
 
-                case "Stop-Enemy":
+                case "Enemy-Stopper":
 
                     Box2DHelper.createStaticFixture(new Box2DBody(mapRectangle, world));
                     break;
@@ -227,7 +227,7 @@ public class TileMapHelper {
 
         mapRenderer.getBatch().end();
 
-        debugRenderer.render(world, camera.combined);
+//        debugRenderer.render(world, camera.combined);
 
         rayHandler.setCombinedMatrix(camera);
         //The render method of the rayHandler should be put after all the others objects
