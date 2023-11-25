@@ -1,5 +1,6 @@
 package knight.arkham.helpers;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.physics.box2d.*;
 import knight.arkham.objects.Enemy;
 import knight.arkham.objects.Player;
@@ -17,6 +18,8 @@ public class GameContactListener implements ContactListener {
 
         int collisionBits = fixtureA.getFilterData().categoryBits | fixtureB.getFilterData().categoryBits;
 
+        Gdx.app.log("test: ", String.valueOf(collisionBits));
+
         switch (collisionBits) {
 
             case PLAYER_BIT | CHECKPOINT_BIT:
@@ -28,13 +31,13 @@ public class GameContactListener implements ContactListener {
                     ((Checkpoint) fixtureB.getUserData()).createCheckpoint();
                 break;
 
-            case ENEMY_BIT | STOP_ENEMY_BIT:
+            case PLAYER_BIT | DOOR_BIT:
 
-                if (fixtureA.getFilterData().categoryBits == ENEMY_BIT)
-                    ((Enemy) fixtureA.getUserData()).changeDirection();
+                if (fixtureA.getFilterData().categoryBits == PLAYER_BIT)
+                    ((Player) fixtureA.getUserData()).teleport();
 
                 else
-                    ((Enemy) fixtureB.getUserData()).changeDirection();
+                    ((Player) fixtureB.getUserData()).teleport();
                 break;
 
             case PLAYER_BIT | ENEMY_HEAD_BIT:
@@ -53,6 +56,15 @@ public class GameContactListener implements ContactListener {
 
                 else
                     ((Player) fixtureB.getUserData()).getHitByEnemy();
+                break;
+
+            case ENEMY_BIT | STOP_ENEMY_BIT:
+
+                if (fixtureA.getFilterData().categoryBits == ENEMY_BIT)
+                    ((Enemy) fixtureA.getUserData()).changeDirection();
+
+                else
+                    ((Enemy) fixtureB.getUserData()).changeDirection();
                 break;
         }
     }

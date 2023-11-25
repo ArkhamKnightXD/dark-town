@@ -19,10 +19,11 @@ public class Box2DBody {
         this.userData = userData;
     }
 
-    public Box2DBody(Rectangle bounds, World world) {
+    public Box2DBody(Rectangle bounds, World world, Object userData) {
         this.bounds = bounds;
         this.world = world;
         this.bodyType = BodyDef.BodyType.StaticBody;
         this.density = 0;
+        this.userData = userData;
     }
 }

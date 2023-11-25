@@ -19,6 +19,7 @@ import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
 import knight.arkham.objects.Animal;
+import knight.arkham.objects.Door;
 import knight.arkham.objects.Enemy;
 import knight.arkham.objects.Player;
 import knight.arkham.objects.structures.Checkpoint;
@@ -36,6 +37,7 @@ public class TileMapHelper {
     private final Array<Enemy> enemies;
     private final Array<Animal> animals;
     private final Array<Checkpoint> checkpoints;
+    private final Array<Door> doors;
     private final Array<ConeLight> coneLights;
     private float accumulator;
     private final float TIME_STEP;
@@ -57,6 +59,7 @@ public class TileMapHelper {
         enemies = new Array<>();
         animals = new Array<>();
         checkpoints = new Array<>();
+        doors = new Array<>();
 
         coneLights = new Array<>();
 
@@ -116,13 +119,19 @@ public class TileMapHelper {
                     checkpoints.add(new Checkpoint(mapRectangle, world, atlas.findRegion("checkpoint"), 2));
                     break;
 
+                case "Doors":
+
+                    doors.add(new Door(mapRectangle, world));
+                    break;
+
                 case "Enemy-Stopper":
 
-                    Box2DHelper.createStaticFixture(new Box2DBody(mapRectangle, world));
+//                    Since I don't need the userData of this body, it could be null.
+                    Box2DHelper.createStaticFixture(new Box2DBody(mapRectangle, world, null));
                     break;
 
                 default:
-                    Box2DHelper.createBody(new Box2DBody(mapRectangle, world));
+                    Box2DHelper.createBody(new Box2DBody(mapRectangle, world, null));
                     break;
             }
         }

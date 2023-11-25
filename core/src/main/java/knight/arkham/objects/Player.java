@@ -162,4 +162,7 @@ public class Player extends GameObject {
     public void getHitByEnemy() {
         isDead = true;
     }
+
+    public void teleport() {
+    }
 }
