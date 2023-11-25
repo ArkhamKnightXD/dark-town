@@ -49,6 +49,6 @@ public class Checkpoint extends InteractiveStructure {
 
         isActive = true;
 
-        GameDataHelper.saveGameData(new GameData("first", body.getPosition()));
+        GameDataHelper.saveGameData(new GameData("FirstScreen", body.getPosition()));
     }
 }

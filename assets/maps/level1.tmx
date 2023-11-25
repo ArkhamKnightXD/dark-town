@@ -128,7 +128,7 @@
 </data>
  </layer>
  <objectgroup id="10" name="Checkpoints">
-  <object id="23" x="624.333" y="351.667" width="16" height="16"/>
+  <object id="23" x="625.333" y="357.417" width="16" height="16"/>
  </objectgroup>
  <objectgroup id="9" name="Lights">
   <object id="17" name="cone" x="1459.75" y="368.682" width="8" height="8"/>

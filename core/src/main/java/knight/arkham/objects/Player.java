@@ -22,6 +22,7 @@ public class Player extends GameObject {
     private final Animation<TextureRegion> runningAnimation;
     private final Animation<TextureRegion> dyingAnimation;
     private float animationTimer;
+    private float deadTimer;
     private boolean isMovingRight;
     private boolean isDead;
 
@@ -49,9 +50,7 @@ public class Player extends GameObject {
         );
     }
 
-    public void update(float deltaTime) {
-
-        getAnimationRegion(deltaTime);
+    private void movement() {
 
         if (Gdx.input.isKeyPressed(Input.Keys.D) && body.getLinearVelocity().x <= 6)
             applyLinealImpulse(new Vector2(4, 0));
@@ -61,37 +60,55 @@ public class Player extends GameObject {
 
         if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE) && body.getLinearVelocity().y == 0)
             applyLinealImpulse(new Vector2(0, 140));
-
-        playerFallToDead();
     }
 
-    private void playerFallToDead() {
+    public void update(float deltaTime) {
 
-        if (getPixelPosition().y < -100) {
+        getAnimationRegion(deltaTime);
 
-            body.setLinearVelocity(0, 0);
+        if (!isDead)
+            movement();
 
-            Vector2 position = GameDataHelper.loadGameData().position;
+        else {
 
-            body.setTransform(position, 0);
+            deadTimer += deltaTime;
+
+            if (deadTimer >= 1) {
+
+                isDead = false;
+                deadTimer = 0;
+                actualState = AnimationState.STANDING;
+
+                spawnToPreviousCheckpoint();
+            }
         }
+
+        if (getPixelPosition().y < -100)
+            spawnToPreviousCheckpoint();
+    }
+
+    private void spawnToPreviousCheckpoint() {
+
+        body.setLinearVelocity(0, 0);
+
+        Vector2 savedPosition = GameDataHelper.loadGameData().position;
+
+        body.setTransform(savedPosition, 0);
     }
 
     private AnimationState getCurrentAnimationState() {
 
-        boolean isPlayerMoving = Gdx.input.isKeyPressed(Input.Keys.A) || Gdx.input.isKeyPressed(Input.Keys.D);
+        if (isDead)
+            return AnimationState.DYING;
 
-        if (body.getLinearVelocity().y > 0 || (body.getLinearVelocity().y < 0 && previousState == AnimationState.JUMPING))
+        else if (body.getLinearVelocity().y > 0 || (body.getLinearVelocity().y < 0 && previousState == AnimationState.JUMPING))
             return AnimationState.JUMPING;
 
-        else if (isPlayerMoving)
+        else if (Gdx.input.isKeyPressed(Input.Keys.A) || Gdx.input.isKeyPressed(Input.Keys.D))
             return AnimationState.RUNNING;
 
         else if (body.getLinearVelocity().y < 0)
             return AnimationState.FALLING;
-
-        else if (isDead)
-            return AnimationState.DYING;
 
         else
             return AnimationState.STANDING;

@@ -15,9 +15,9 @@ public class GameContactListener implements ContactListener {
         Fixture fixtureA = contact.getFixtureA();
         Fixture fixtureB = contact.getFixtureB();
 
-        int collisionDefinition = fixtureA.getFilterData().categoryBits | fixtureB.getFilterData().categoryBits;
+        int collisionBits = fixtureA.getFilterData().categoryBits | fixtureB.getFilterData().categoryBits;
 
-        switch (collisionDefinition) {
+        switch (collisionBits) {
 
             case PLAYER_BIT | CHECKPOINT_BIT:
 

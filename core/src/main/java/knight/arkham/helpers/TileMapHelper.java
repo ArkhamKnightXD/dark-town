@@ -50,7 +50,7 @@ public class TileMapHelper {
         rayHandler = new RayHandler(world);
         rayHandler.setAmbientLight(.2f);
 
-        player = new Player(new Rectangle(20, 50, 32, 32), world, atlas);
+        player = new Player(new Rectangle(20, 65, 32, 32), world, atlas);
 
         GameDataHelper.saveGameData(new GameData("first", player.getWorldPosition()));
 
@@ -227,7 +227,7 @@ public class TileMapHelper {
 
         mapRenderer.getBatch().end();
 
-//        debugRenderer.render(world, camera.combined);
+        debugRenderer.render(world, camera.combined);
 
         rayHandler.setCombinedMatrix(camera);
         //The render method of the rayHandler should be put after all the others objects
