@@ -1,6 +1,5 @@
 package knight.arkham.helpers;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.physics.box2d.*;
 import knight.arkham.objects.Enemy;
 import knight.arkham.objects.Player;
@@ -17,8 +16,6 @@ public class GameContactListener implements ContactListener {
         Fixture fixtureB = contact.getFixtureB();
 
         int collisionBits = fixtureA.getFilterData().categoryBits | fixtureB.getFilterData().categoryBits;
-
-        Gdx.app.log("test: ", String.valueOf(collisionBits));
 
         switch (collisionBits) {
 
@@ -62,25 +59,26 @@ public class GameContactListener implements ContactListener {
                 else
                     ((Enemy) fixtureB.getUserData()).changeDirection();
                 break;
-
-            default:
-                TileMapHelper.canChangePlayer = false;
-                break;
         }
     }
 
     @Override
     public void endContact(Contact contact) {
 
+        Fixture fixtureA = contact.getFixtureA();
+        Fixture fixtureB = contact.getFixtureB();
+
+        int collisionBits = fixtureA.getFilterData().categoryBits | fixtureB.getFilterData().categoryBits;
+
+        short collisionPlayerAndDoor = PLAYER_BIT | DOOR_BIT;
+
+        if (collisionBits == collisionPlayerAndDoor)
+            TileMapHelper.canChangePlayer = false;
     }
 
     @Override
-    public void preSolve(Contact contact, Manifold oldManifold) {
-
-    }
+    public void preSolve(Contact contact, Manifold oldManifold) {}
 
     @Override
-    public void postSolve(Contact contact, ContactImpulse impulse) {
-
-    }
+    public void postSolve(Contact contact, ContactImpulse impulse) {}
 }

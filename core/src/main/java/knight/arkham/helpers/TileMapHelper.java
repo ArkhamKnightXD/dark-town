@@ -42,7 +42,7 @@ public class TileMapHelper {
     private final Array<ConeLight> coneLights;
     private float accumulator;
     private final float TIME_STEP;
-    private float stateTimer;
+    private float lightsTimer;
     private boolean isAlterPlayerActive;
     public static boolean canChangePlayer;
 
@@ -205,11 +205,11 @@ public class TileMapHelper {
         for (Checkpoint checkpoint : checkpoints)
             checkpoint.update(deltaTime);
 
-        stateTimer += deltaTime;
+        lightsTimer += deltaTime;
 
-        if (stateTimer > 2) {
+        if (lightsTimer > 2) {
 
-            stateTimer = 0;
+            lightsTimer = 0;
 
             for (ConeLight light : coneLights)
                 light.setActive(!light.isActive());
