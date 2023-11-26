@@ -22,8 +22,10 @@ public class Box2DHelper {
         if (box2DBody.userData instanceof Checkpoint)
             fixtureDef.filter.categoryBits = CHECKPOINT_BIT;
 
-        else if (box2DBody.userData instanceof Door)
+        else if (box2DBody.userData instanceof Door) {
             fixtureDef.filter.categoryBits = DOOR_BIT;
+            fixtureDef.isSensor = true;
+        }
 
         else
             fixtureDef.filter.categoryBits = STOP_ENEMY_BIT;

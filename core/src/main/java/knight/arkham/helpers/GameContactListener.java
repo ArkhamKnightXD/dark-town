@@ -33,11 +33,7 @@ public class GameContactListener implements ContactListener {
 
             case PLAYER_BIT | DOOR_BIT:
 
-                if (fixtureA.getFilterData().categoryBits == PLAYER_BIT)
-                    ((Player) fixtureA.getUserData()).teleport();
-
-                else
-                    ((Player) fixtureB.getUserData()).teleport();
+                TileMapHelper.canChangePlayer = true;
                 break;
 
             case PLAYER_BIT | ENEMY_HEAD_BIT:
@@ -65,6 +61,10 @@ public class GameContactListener implements ContactListener {
 
                 else
                     ((Enemy) fixtureB.getUserData()).changeDirection();
+                break;
+
+            default:
+                TileMapHelper.canChangePlayer = false;
                 break;
         }
     }

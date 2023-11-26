@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.10.2" orientation="orthogonal" renderorder="right-down" width="200" height="30" tilewidth="16" tileheight="16" infinite="0" nextlayerid="13" nextobjectid="40">
+<map version="1.10" tiledversion="1.10.2" orientation="orthogonal" renderorder="right-down" width="200" height="30" tilewidth="16" tileheight="16" infinite="0" nextlayerid="14" nextobjectid="41">
  <tileset firstgid="1" source="tileset/tileset_noir_ground.tsx"/>
  <tileset firstgid="129" source="tileset/enviroment_noir.tsx"/>
  <tileset firstgid="193" source="tileset/enviroment_noir_negative.tsx"/>
@@ -58,6 +58,9 @@
  <objectgroup id="12" name="Doors">
   <object id="38" x="2805.27" y="438.727" width="22.5455" height="23.2727"/>
   <object id="39" x="1031.25" y="442.5" width="19.25" height="18.75"/>
+ </objectgroup>
+ <objectgroup id="13" name="Alter-Player">
+  <object id="40" x="2800.73" y="431.818" width="32" height="32"/>
  </objectgroup>
  <objectgroup id="8" name="Animals">
   <object id="10" name="cat" x="1239" y="446.5" width="16" height="16"/>

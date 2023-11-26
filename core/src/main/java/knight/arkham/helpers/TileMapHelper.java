@@ -34,6 +34,7 @@ public class TileMapHelper {
     private final Box2DDebugRenderer debugRenderer;
     private final OrthogonalTiledMapRenderer mapRenderer;
     private final Player player;
+    private Player alterPlayer;
     private final Array<Enemy> enemies;
     private final Array<Animal> animals;
     private final Array<Checkpoint> checkpoints;
@@ -42,6 +43,8 @@ public class TileMapHelper {
     private float accumulator;
     private final float TIME_STEP;
     private float stateTimer;
+    private boolean isAlterPlayerActive;
+    public static boolean canChangePlayer;
 
     public TileMapHelper(String mapFilePath, String atlasFilePath, World world) {
 
@@ -124,6 +127,11 @@ public class TileMapHelper {
                     doors.add(new Door(mapRectangle, world));
                     break;
 
+                case "Alter-Player":
+
+                    alterPlayer = new Player(mapRectangle, world, atlas);
+                    break;
+
                 case "Enemy-Stopper":
 
 //                    Since I don't need the userData of this body, it could be null.
@@ -165,7 +173,10 @@ public class TileMapHelper {
         if (Gdx.input.isKeyJustPressed(Input.Keys.F4))
             camera.zoom -= 0.1f;
 
-        camera.position.set(player.getWorldPosition().x, 5.2f, 0);
+        if (isAlterPlayerActive)
+            camera.position.set(alterPlayer.getWorldPosition().x, 5.2f, 0);
+        else
+            camera.position.set(player.getWorldPosition().x, 5.2f, 0);
 
         camera.update();
     }
@@ -175,7 +186,13 @@ public class TileMapHelper {
         //I also have call the rayHandler update method for everything to work accordingly.
         rayHandler.update();
 
-        player.update(deltaTime);
+        if (canChangePlayer && Gdx.input.isKeyJustPressed(Input.Keys.F5))
+            isAlterPlayerActive = !isAlterPlayerActive;
+
+        if (isAlterPlayerActive)
+            alterPlayer.update(deltaTime);
+        else
+            player.update(deltaTime);
 
         updateCameraPosition(camera);
 
@@ -224,6 +241,7 @@ public class TileMapHelper {
         mapRenderer.getBatch().begin();
 
         player.draw(mapRenderer.getBatch());
+        alterPlayer.draw(mapRenderer.getBatch());
 
         for (Enemy enemy : enemies)
             enemy.draw(mapRenderer.getBatch());
@@ -238,9 +256,11 @@ public class TileMapHelper {
 
         debugRenderer.render(world, camera.combined);
 
-        rayHandler.setCombinedMatrix(camera);
-        //The render method of the rayHandler should be put after all the others objects
-        rayHandler.render();
+        if (!isAlterPlayerActive) {
+            rayHandler.setCombinedMatrix(camera);
+            //The render method of the rayHandler should be put after all the others objects
+            rayHandler.render();
+        }
     }
 
     public void dispose(){
