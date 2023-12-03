@@ -25,6 +25,7 @@ import knight.arkham.objects.Player;
 import knight.arkham.objects.structures.Checkpoint;
 
 import static knight.arkham.helpers.Constants.PIXELS_PER_METER;
+import static knight.arkham.helpers.Constants.TIME_STEP;
 
 public class TileMapHelper {
     private final TiledMap tiledMap;
@@ -42,7 +43,6 @@ public class TileMapHelper {
     private final Array<ConeLight> coneLights;
     private float lightsTimer;
     private float accumulator;
-    private final float TIME_STEP;
     private boolean isAlterPlayerActive;
     public static boolean canChangePlayer;
 
@@ -68,8 +68,6 @@ public class TileMapHelper {
 
         mapRenderer = setupMap();
         debugRenderer = new Box2DDebugRenderer();
-
-        TIME_STEP = 1/240f;
     }
 
     public OrthogonalTiledMapRenderer setupMap() {
