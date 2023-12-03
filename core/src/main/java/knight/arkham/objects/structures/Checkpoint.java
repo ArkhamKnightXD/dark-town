@@ -1,5 +1,6 @@
 package knight.arkham.objects.structures;
 
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -11,10 +12,13 @@ import knight.arkham.helpers.Box2DHelper;
 import knight.arkham.helpers.GameData;
 import knight.arkham.helpers.GameDataHelper;
 
+import static knight.arkham.helpers.AssetsHelper.loadSound;
+
 public class Checkpoint extends InteractiveStructure {
     private final Animation<TextureRegion> animation;
     private float stateTimer;
     private boolean isActive;
+    private final Sound activationSound;
 
     public Checkpoint(Rectangle rectangle, World world, TextureAtlas.AtlasRegion region, int totalFrames) {
         super(
@@ -26,6 +30,8 @@ public class Checkpoint extends InteractiveStructure {
         );
 
         animation = makeAnimationByRegion(region, totalFrames);
+
+        activationSound = loadSound("okay.wav");
     }
 
     @Override
@@ -47,8 +53,16 @@ public class Checkpoint extends InteractiveStructure {
 
         collisionWithPlayer();
 
+        activationSound.play();
+
         isActive = true;
 
         GameDataHelper.saveGameData(new GameData("FirstScreen", body.getPosition()));
+    }
+
+    @Override
+    public void dispose() {
+        activationSound.dispose();
+        super.dispose();
     }
 }

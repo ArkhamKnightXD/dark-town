@@ -1,5 +1,6 @@
 package knight.arkham.objects;
 
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
@@ -11,12 +12,15 @@ import com.badlogic.gdx.physics.box2d.World;
 import knight.arkham.helpers.Box2DBody;
 import knight.arkham.helpers.Box2DHelper;
 
+import static knight.arkham.helpers.AssetsHelper.loadSound;
+
 public class Enemy extends GameObject {
     private final Animation<TextureRegion> movingAnimation;
     private float animationTimer;
     public boolean isMovingRight;
     private boolean setToDestroy;
     private boolean isDestroyed;
+    private final Sound hitSound;
 
     public Enemy(Rectangle bounds, World world, TextureAtlas.AtlasRegion region, int totalFrames) {
         super(
@@ -28,6 +32,8 @@ public class Enemy extends GameObject {
         );
 
         movingAnimation = makeAnimationByRegion(region, totalFrames, 0.5f);
+
+        hitSound = loadSound("drop.wav");
     }
 
     @Override
@@ -88,7 +94,14 @@ public class Enemy extends GameObject {
         isMovingRight = !isMovingRight;
     }
 
-    public void hitByPlayer(){
+    public void hitByPlayer() {
+        hitSound.play();
         setToDestroy = true;
+    }
+
+    @Override
+    public void dispose() {
+        hitSound.dispose();
+        super.dispose();
     }
 }

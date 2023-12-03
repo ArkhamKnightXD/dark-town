@@ -2,6 +2,7 @@ package knight.arkham.objects;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -12,6 +13,8 @@ import com.badlogic.gdx.physics.box2d.World;
 import knight.arkham.helpers.Box2DBody;
 import knight.arkham.helpers.Box2DHelper;
 import knight.arkham.helpers.GameDataHelper;
+
+import static knight.arkham.helpers.AssetsHelper.loadSound;
 
 public class Player extends GameObject {
     private enum AnimationState {FALLING, JUMPING, STANDING, RUNNING, DYING}
@@ -25,6 +28,7 @@ public class Player extends GameObject {
     private float deadTimer;
     private boolean isMovingRight;
     private boolean isDead;
+    private final Sound jumpSound;
 
     public Player(Rectangle bounds, World world, TextureAtlas atlas) {
         super(
@@ -40,6 +44,8 @@ public class Player extends GameObject {
         standingAnimation = makeAnimationByRegion(atlas.findRegion("smoking"), 6, 0.2f);
         runningAnimation = makeAnimationByRegion(atlas.findRegion("walking"), 8, 0.1f);
         dyingAnimation = makeAnimationByRegion(atlas.findRegion("dying"), 8, 0.1f);
+
+        jumpSound = loadSound("magic.wav");
     }
 
     @Override
@@ -58,8 +64,11 @@ public class Player extends GameObject {
         else if (Gdx.input.isKeyPressed(Input.Keys.A) && body.getLinearVelocity().x >= -6)
             applyLinealImpulse(new Vector2(-4, 0));
 
-        if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE) && body.getLinearVelocity().y == 0)
+        if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE) && body.getLinearVelocity().y == 0) {
+
             applyLinealImpulse(new Vector2(0, 140));
+            jumpSound.play();
+        }
     }
 
     public void update(float deltaTime) {
@@ -162,5 +171,11 @@ public class Player extends GameObject {
 
     public void hitByEnemy() {
         isDead = true;
+    }
+
+    @Override
+    public void dispose() {
+        jumpSound.dispose();
+        super.dispose();
     }
 }
