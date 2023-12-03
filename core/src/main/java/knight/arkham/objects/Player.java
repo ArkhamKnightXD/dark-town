@@ -146,14 +146,15 @@ public class Player extends GameObject {
 
     private void flipRegionOnXAxis(TextureRegion region) {
 
+        if ((body.getLinearVelocity().x > 0 || isMovingRight) && region.isFlipX()) {
+
+            region.flip(true, false);
+            isMovingRight = true;
+        }
         if ((body.getLinearVelocity().x < 0 || !isMovingRight) && !region.isFlipX()) {
 
             region.flip(true, false);
             isMovingRight = false;
-        } else if ((body.getLinearVelocity().x > 0 || isMovingRight) && region.isFlipX()) {
-
-            region.flip(true, false);
-            isMovingRight = true;
         }
     }
 

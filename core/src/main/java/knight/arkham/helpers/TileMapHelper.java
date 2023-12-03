@@ -186,7 +186,7 @@ public class TileMapHelper {
         //I also have call the rayHandler update method for everything to work accordingly.
         rayHandler.update();
 
-        if (canChangePlayer && Gdx.input.isKeyJustPressed(Input.Keys.F5))
+        if (canChangePlayer && Gdx.input.isKeyJustPressed(Input.Keys.W))
             isAlterPlayerActive = !isAlterPlayerActive;
 
         if (isAlterPlayerActive)
