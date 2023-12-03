@@ -160,7 +160,7 @@ public class Player extends GameObject {
 
     public Vector2 getWorldPosition() {return body.getPosition();}
 
-    public void getHitByEnemy() {
+    public void hitByEnemy() {
         isDead = true;
     }
 }

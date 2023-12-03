@@ -12,8 +12,8 @@ import knight.arkham.helpers.Box2DBody;
 import knight.arkham.helpers.Box2DHelper;
 
 public class Enemy extends GameObject {
-    private final Animation<TextureRegion> runningAnimation;
-    private float stateTimer;
+    private final Animation<TextureRegion> movingAnimation;
+    private float animationTimer;
     public boolean isMovingRight;
     private boolean setToDestroy;
     private boolean isDestroyed;
@@ -27,7 +27,7 @@ public class Enemy extends GameObject {
                 region.getRegionHeight())
         );
 
-        runningAnimation = makeAnimationByRegion(region, totalFrames, 0.5f);
+        movingAnimation = makeAnimationByRegion(region, totalFrames, 0.5f);
     }
 
     @Override
@@ -46,14 +46,14 @@ public class Enemy extends GameObject {
 
     public void update(float deltaTime) {
 
-        stateTimer += deltaTime;
+        animationTimer += deltaTime;
 
         if (setToDestroy && !isDestroyed)
             destroyBody();
 
         else if (!isDestroyed) {
 
-            actualRegion = runningAnimation.getKeyFrame(stateTimer, true);
+            actualRegion = movingAnimation.getKeyFrame(animationTimer, true);
 
             flipRegionOnXAxis(actualRegion);
 

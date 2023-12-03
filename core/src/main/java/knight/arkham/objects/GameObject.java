@@ -41,10 +41,6 @@ public abstract class GameObject {
         batch.draw(actualRegion, drawBounds.x, drawBounds.y, drawBounds.width, drawBounds.height);
     }
 
-    protected void applyLinealImpulse(Vector2 impulseDirection) {
-        body.applyLinearImpulse(impulseDirection, body.getWorldCenter(), true);
-    }
-
     protected Animation<TextureRegion> makeAnimationByRegion(TextureRegion region, int totalFrames, float frameDuration) {
 
         Array<TextureRegion> animationFrames = new Array<>();
@@ -53,6 +49,10 @@ public abstract class GameObject {
             animationFrames.add(new TextureRegion(region, i * regionWidth, 0, regionWidth, regionHeight));
 
         return new Animation<>(frameDuration, animationFrames);
+    }
+
+    protected void applyLinealImpulse(Vector2 impulseDirection) {
+        body.applyLinearImpulse(impulseDirection, body.getWorldCenter(), true);
     }
 
     protected Vector2 getPixelPosition() {

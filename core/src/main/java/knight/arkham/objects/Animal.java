@@ -11,7 +11,7 @@ import knight.arkham.helpers.Box2DHelper;
 
 public class Animal extends GameObject {
     private final Animation<TextureRegion> animation;
-    private float stateTimer;
+    private float animationTimer;
 
     public Animal(Rectangle bounds, World world, TextureAtlas.AtlasRegion region, int totalFrames) {
         super(
@@ -36,8 +36,8 @@ public class Animal extends GameObject {
 
     public void update(float deltaTime) {
 
-        stateTimer += deltaTime;
+        animationTimer += deltaTime;
 
-        actualRegion = animation.getKeyFrame(stateTimer, true);
+        actualRegion = animation.getKeyFrame(animationTimer, true);
     }
 }

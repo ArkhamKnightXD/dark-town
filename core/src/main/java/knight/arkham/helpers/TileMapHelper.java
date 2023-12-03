@@ -40,9 +40,9 @@ public class TileMapHelper {
     private final Array<Checkpoint> checkpoints;
     private final Array<Door> doors;
     private final Array<ConeLight> coneLights;
+    private float lightsTimer;
     private float accumulator;
     private final float TIME_STEP;
-    private float lightsTimer;
     private boolean isAlterPlayerActive;
     public static boolean canChangePlayer;
 
@@ -133,7 +133,6 @@ public class TileMapHelper {
                     break;
 
                 case "Enemy-Stopper":
-
 //                    Since I don't need the userData of this body, it could be null.
                     Box2DHelper.createStaticFixture(new Box2DBody(mapRectangle, world, null));
                     break;
@@ -270,8 +269,10 @@ public class TileMapHelper {
         atlas.dispose();
         mapRenderer.dispose();
         world.dispose();
-        rayHandler.dispose();
         debugRenderer.dispose();
+
+//        If I make dispose of the rayHandler, I don't need to dispose of the lights.
+        rayHandler.dispose();
 
         for (Enemy enemy : enemies)
             enemy.dispose();

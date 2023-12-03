@@ -45,10 +45,10 @@ public class GameContactListener implements ContactListener {
             case PLAYER_BIT | ENEMY_BIT:
 
                 if (fixtureA.getFilterData().categoryBits == PLAYER_BIT)
-                    ((Player) fixtureA.getUserData()).getHitByEnemy();
+                    ((Player) fixtureA.getUserData()).hitByEnemy();
 
                 else
-                    ((Player) fixtureB.getUserData()).getHitByEnemy();
+                    ((Player) fixtureB.getUserData()).hitByEnemy();
                 break;
 
             case ENEMY_BIT | STOP_ENEMY_BIT:
@@ -70,9 +70,9 @@ public class GameContactListener implements ContactListener {
 
         int collisionBits = fixtureA.getFilterData().categoryBits | fixtureB.getFilterData().categoryBits;
 
-        short collisionPlayerAndDoor = PLAYER_BIT | DOOR_BIT;
+        short collisionPlayerWithDoor = PLAYER_BIT | DOOR_BIT;
 
-        if (collisionBits == collisionPlayerAndDoor)
+        if (collisionBits == collisionPlayerWithDoor)
             TileMapHelper.canChangePlayer = false;
     }
 
