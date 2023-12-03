@@ -29,6 +29,7 @@ public class Player extends GameObject {
     private boolean isMovingRight;
     private boolean isDead;
     private final Sound jumpSound;
+    private final Sound deathSound;
 
     public Player(Rectangle bounds, World world, TextureAtlas atlas) {
         super(
@@ -46,6 +47,7 @@ public class Player extends GameObject {
         dyingAnimation = makeAnimationByRegion(atlas.findRegion("dying"), 8, 0.1f);
 
         jumpSound = loadSound("magic.wav");
+        deathSound = loadSound("fall.wav");
     }
 
     @Override
@@ -171,6 +173,7 @@ public class Player extends GameObject {
 
     public void hitByEnemy() {
         isDead = true;
+        deathSound.play();
     }
 
     @Override
