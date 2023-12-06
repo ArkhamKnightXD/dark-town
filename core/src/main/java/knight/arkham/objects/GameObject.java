@@ -55,7 +55,7 @@ public abstract class GameObject {
         body.applyLinearImpulse(impulseDirection, body.getWorldCenter(), true);
     }
 
-    protected Vector2 getPixelPosition() {
+    public Vector2 getPixelPosition() {
         return body.getPosition().scl(PIXELS_PER_METER);
     }
 

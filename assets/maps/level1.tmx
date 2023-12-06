@@ -56,11 +56,11 @@
   <object id="29" x="2564" y="465.545" width="521.667" height="14.4545"/>
  </objectgroup>
  <objectgroup id="12" name="Doors">
-  <object id="38" x="2805.27" y="438.727" width="22.5455" height="23.2727"/>
-  <object id="39" x="1031.25" y="442.5" width="19.25" height="18.75"/>
+  <object id="38" x="2808.18" y="442.182" width="16.9091" height="20.1818"/>
+  <object id="39" x="1033.25" y="440.5" width="15.4318" height="22.5682"/>
  </objectgroup>
  <objectgroup id="13" name="Alter-Player">
-  <object id="40" x="2800.73" y="431.818" width="32" height="32"/>
+  <object id="40" x="2829.46" y="431.273" width="32" height="32"/>
  </objectgroup>
  <objectgroup id="8" name="Animals">
   <object id="10" name="cat" x="1239" y="446.5" width="16" height="16"/>

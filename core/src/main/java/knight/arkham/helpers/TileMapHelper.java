@@ -1,6 +1,7 @@
 package knight.arkham.helpers;
 
 import box2dLight.ConeLight;
+import box2dLight.PointLight;
 import box2dLight.RayHandler;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
@@ -41,6 +42,7 @@ public class TileMapHelper {
     private final Array<Checkpoint> checkpoints;
     private final Array<Door> doors;
     private final Array<ConeLight> coneLights;
+    private final Array<PointLight> pointLights;
     private float lightsTimer;
     private float accumulator;
     private boolean isAlterPlayerActive;
@@ -65,6 +67,7 @@ public class TileMapHelper {
         doors = new Array<>();
 
         coneLights = new Array<>();
+        pointLights = new Array<>();
 
         mapRenderer = setupMap();
         debugRenderer = new Box2DDebugRenderer();
@@ -112,7 +115,7 @@ public class TileMapHelper {
                         coneLights.add(LightHelper.createConeLight(rayHandler, lightPosition));
 
                     else
-                        LightHelper.createPointLight(rayHandler, lightPosition);
+                        pointLights.add(LightHelper.createPointLight(rayHandler, lightPosition));
                     break;
 
                 case "Checkpoints":
@@ -201,6 +204,14 @@ public class TileMapHelper {
 
         for (Checkpoint checkpoint : checkpoints)
             checkpoint.update(deltaTime);
+
+        for (PointLight light : pointLights) {
+
+            Vector2 lightPosition = light.getPosition().scl(PIXELS_PER_METER);
+
+            if (lightPosition.dst(player.getPixelPosition()) < 80 && Gdx.input.isKeyJustPressed(Input.Keys.W))
+                light.setActive(!light.isActive());
+        }
 
         lightsTimer += deltaTime;
 
