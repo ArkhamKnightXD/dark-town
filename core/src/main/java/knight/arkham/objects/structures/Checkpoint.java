@@ -16,20 +16,20 @@ import static knight.arkham.helpers.AssetsHelper.loadSound;
 
 public class Checkpoint extends InteractiveStructure {
     private final Animation<TextureRegion> animation;
-    private float stateTimer;
+    private float animationTimer;
     private boolean isActive;
     private final Sound activationSound;
 
-    public Checkpoint(Rectangle rectangle, World world, TextureAtlas.AtlasRegion region, int totalFrames) {
+    public Checkpoint(Rectangle rectangle, World world, TextureAtlas.AtlasRegion region) {
         super(
             rectangle, world,
+
             new TextureRegion(
-                region, 0, 0,
-                region.getRegionWidth() / totalFrames,
-                region.getRegionHeight())
+                region, 0, 0, region.getRegionWidth() / 2, region.getRegionHeight()
+            )
         );
 
-        animation = makeAnimationByRegion(region, totalFrames);
+        animation = makeAnimationByRegion(region);
 
         activationSound = loadSound("okay.wav");
     }
@@ -43,10 +43,10 @@ public class Checkpoint extends InteractiveStructure {
 
     public void update(float deltaTime) {
 
-        stateTimer += deltaTime;
+        animationTimer += deltaTime;
 
         if (isActive)
-            actualRegion = animation.getKeyFrame(stateTimer, true);
+            actualRegion = animation.getKeyFrame(animationTimer, true);
     }
 
     public void createCheckpoint() {

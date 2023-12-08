@@ -14,4 +14,5 @@ public class Constants {
     public static final short FINISH_BIT = 256;
     public static final short PLAYER_HEAD_BIT = 512;
     public static final short DOOR_BIT = 1024;
+    public static final short BOX_BIT = 2048;
 }

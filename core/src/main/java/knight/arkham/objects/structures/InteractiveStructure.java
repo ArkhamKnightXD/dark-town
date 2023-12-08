@@ -37,11 +37,11 @@ public abstract class InteractiveStructure {
 
     protected abstract Fixture createFixture();
 
-    protected Animation<TextureRegion> makeAnimationByRegion(TextureRegion region, int totalFrames) {
+    protected Animation<TextureRegion> makeAnimationByRegion(TextureRegion region) {
 
         Array<TextureRegion> animationFrames = new Array<>();
 
-        for (int i = 0; i < totalFrames; i++)
+        for (int i = 0; i < 2; i++)
             animationFrames.add(new TextureRegion(region, i * regionWidth, 0, regionWidth, regionHeight));
 
         return new Animation<>(0.5f, animationFrames);

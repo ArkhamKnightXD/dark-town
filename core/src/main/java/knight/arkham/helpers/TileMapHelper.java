@@ -19,10 +19,8 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
-import knight.arkham.objects.Animal;
-import knight.arkham.objects.Door;
-import knight.arkham.objects.Enemy;
-import knight.arkham.objects.Player;
+import knight.arkham.objects.*;
+import knight.arkham.objects.structures.Box;
 import knight.arkham.objects.structures.Checkpoint;
 
 import static knight.arkham.helpers.Constants.PIXELS_PER_METER;
@@ -41,6 +39,7 @@ public class TileMapHelper {
     private final Array<Animal> animals;
     private final Array<Checkpoint> checkpoints;
     private final Array<Door> doors;
+    private final Array<Box> boxes;
     private final Array<ConeLight> coneLights;
     private final Array<PointLight> pointLights;
     private float lightsTimer;
@@ -65,6 +64,7 @@ public class TileMapHelper {
         animals = new Array<>();
         checkpoints = new Array<>();
         doors = new Array<>();
+        boxes = new Array<>();
 
         coneLights = new Array<>();
         pointLights = new Array<>();
@@ -120,12 +120,17 @@ public class TileMapHelper {
 
                 case "Checkpoints":
 
-                    checkpoints.add(new Checkpoint(mapRectangle, world, atlas.findRegion("checkpoint"), 2));
+                    checkpoints.add(new Checkpoint(mapRectangle, world, atlas.findRegion("checkpoint")));
                     break;
 
                 case "Doors":
 
                     doors.add(new Door(mapRectangle, world));
+                    break;
+
+                case "Boxes":
+
+                    boxes.add(new Box(mapRectangle, world));
                     break;
 
                 case "Alter-Player":
@@ -260,9 +265,12 @@ public class TileMapHelper {
         for (Checkpoint checkpoint : checkpoints)
             checkpoint.draw(mapRenderer.getBatch());
 
+        for (Box box : boxes)
+            box.draw(mapRenderer.getBatch());
+
         mapRenderer.getBatch().end();
 
-//        debugRenderer.render(world, camera.combined);
+        debugRenderer.render(world, camera.combined);
 
         if (!isAlterPlayerActive) {
             rayHandler.setCombinedMatrix(camera);
@@ -291,5 +299,8 @@ public class TileMapHelper {
 
         for (Checkpoint checkpoint : checkpoints)
             checkpoint.dispose();
+
+        for (Box box : boxes)
+            box.dispose();
     }
 }
