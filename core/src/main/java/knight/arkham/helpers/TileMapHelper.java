@@ -22,6 +22,7 @@ import com.badlogic.gdx.utils.Array;
 import knight.arkham.objects.*;
 import knight.arkham.objects.structures.Box;
 import knight.arkham.objects.structures.Checkpoint;
+import knight.arkham.objects.structures.Door;
 
 import static knight.arkham.helpers.Constants.PIXELS_PER_METER;
 import static knight.arkham.helpers.Constants.TIME_STEP;
