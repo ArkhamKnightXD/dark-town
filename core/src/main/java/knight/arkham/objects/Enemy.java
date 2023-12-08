@@ -26,9 +26,8 @@ public class Enemy extends GameObject {
         super(
             bounds, world,
             new TextureRegion(
-                region, 0, 0,
-                region.getRegionWidth() / totalFrames,
-                region.getRegionHeight())
+                region, 0, 0, region.getRegionWidth() / totalFrames, region.getRegionHeight()
+            )
         );
 
         movingAnimation = makeAnimationByRegion(region, totalFrames, 0.5f);
