@@ -64,7 +64,7 @@
   <object id="39" x="1033.25" y="440.5" width="15.4318" height="22.5682"/>
  </objectgroup>
  <objectgroup id="13" name="Alter-Player">
-  <object id="40" x="2804.13" y="431.606" width="32" height="32"/>
+  <object id="40" x="2828.8" y="431.606" width="32" height="32"/>
  </objectgroup>
  <objectgroup id="8" name="Animals">
   <object id="10" name="cat" x="1239" y="446.5" width="16" height="16"/>
