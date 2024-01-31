@@ -2,11 +2,8 @@ package knight.arkham.screens;
 
 import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.ScreenUtils;
 import knight.arkham.Dark;
-import knight.arkham.helpers.GameContactListener;
 import knight.arkham.helpers.TileMapHelper;
 
 public class GameScreen extends ScreenAdapter {
@@ -20,10 +17,7 @@ public class GameScreen extends ScreenAdapter {
 
         camera = game.camera;
 
-        World world = new World(new Vector2(0, -40), true);
-        world.setContactListener(new GameContactListener());
-
-        mapHelper = new TileMapHelper("maps/level1.tmx", "images/test.atlas", world);
+        mapHelper = new TileMapHelper("maps/level1.tmx", "images/test.atlas");
     }
 
     @Override

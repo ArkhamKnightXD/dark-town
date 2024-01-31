@@ -26,6 +26,7 @@ import knight.arkham.objects.structures.Door;
 
 import static knight.arkham.helpers.Constants.PIXELS_PER_METER;
 import static knight.arkham.helpers.Constants.TIME_STEP;
+import static knight.arkham.helpers.GameDataHelper.saveGameData;
 
 public class TileMapHelper {
     private final TiledMap tiledMap;
@@ -48,18 +49,20 @@ public class TileMapHelper {
     private boolean isAlterPlayerActive;
     public static boolean canChangePlayer;
 
-    public TileMapHelper(String mapFilePath, String atlasFilePath, World world) {
+    public TileMapHelper(String mapFilePath, String atlasFilePath) {
 
         tiledMap = new TmxMapLoader().load(mapFilePath);
         atlas = new TextureAtlas(atlasFilePath);
-        this.world = world;
+
+        world = new World(new Vector2(0, -40), true);
+        world.setContactListener(new GameContactListener());
 
         rayHandler = new RayHandler(world);
         rayHandler.setAmbientLight(.2f);
 
         player = new Player(new Rectangle(20, 65, 32, 32), world, atlas);
 
-        GameDataHelper.saveGameData(new GameData("first", player.getWorldPosition()));
+        saveGameData(new GameData("first", player.getWorldPosition()));
 
         enemies = new Array<>();
         animals = new Array<>();
