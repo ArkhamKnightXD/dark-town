@@ -15,6 +15,7 @@ import knight.arkham.helpers.Box2DHelper;
 import knight.arkham.helpers.GameDataHelper;
 
 import static knight.arkham.helpers.AssetsHelper.loadSound;
+import static knight.arkham.helpers.Constants.PIXELS_PER_METER;
 
 public class Player extends GameObject {
     private enum AnimationState {FALLING, JUMPING, STANDING, RUNNING, DYING}
@@ -97,6 +98,11 @@ public class Player extends GameObject {
         if (getPixelPosition().y < -100)
             spawnToPreviousCheckpoint();
     }
+
+    public Vector2 getPixelPosition() {
+        return body.getPosition().scl(PIXELS_PER_METER);
+    }
+
 
     private void spawnToPreviousCheckpoint() {
 

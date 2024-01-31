@@ -20,7 +20,7 @@ import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
 import knight.arkham.objects.*;
-import knight.arkham.objects.structures.Box;
+import knight.arkham.objects.Box;
 import knight.arkham.objects.structures.Checkpoint;
 import knight.arkham.objects.structures.Door;
 
@@ -40,7 +40,6 @@ public class TileMapHelper {
     private final Array<GameObject> gameObjects;
     private final Array<Checkpoint> checkpoints;
     private final Array<Door> doors;
-    private final Array<Box> boxes;
     private final Array<ConeLight> coneLights;
     private final Array<PointLight> pointLights;
     private float lightsTimer;
@@ -67,7 +66,6 @@ public class TileMapHelper {
 
         checkpoints = new Array<>();
         doors = new Array<>();
-        boxes = new Array<>();
 
         coneLights = new Array<>();
         pointLights = new Array<>();
@@ -133,7 +131,7 @@ public class TileMapHelper {
 
                 case "Boxes":
 
-                    boxes.add(new Box(mapRectangle, world));
+                    gameObjects.add(new Box(mapRectangle, world));
                     break;
 
                 case "Alter-Player":
@@ -262,9 +260,6 @@ public class TileMapHelper {
         for (Checkpoint checkpoint : checkpoints)
             checkpoint.draw(mapRenderer.getBatch());
 
-        for (Box box : boxes)
-            box.draw(mapRenderer.getBatch());
-
         mapRenderer.getBatch().end();
 
 //        debugRenderer.render(world, camera.combined);
@@ -293,8 +288,5 @@ public class TileMapHelper {
 
         for (Checkpoint checkpoint : checkpoints)
             checkpoint.dispose();
-
-        for (Box box : boxes)
-            box.dispose();
     }
 }
