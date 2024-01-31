@@ -43,13 +43,15 @@ public class Enemy extends GameObject {
         );
     }
 
+
     private void destroyBody() {
 
         actualWorld.destroyBody(body);
         isDestroyed = true;
     }
 
-    public void update(float deltaTime) {
+    @Override
+    protected void childUpdate(float deltaTime) {
 
         animationTimer += deltaTime;
 

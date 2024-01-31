@@ -34,6 +34,13 @@ public abstract class GameObject {
 
     protected abstract Body createBody();
 
+    protected abstract void childUpdate(float deltaTime);
+
+    public void update(float deltaTime) {
+
+        childUpdate(deltaTime);
+    }
+
     public void draw(Batch batch) {
 
         Rectangle drawBounds = Box2DHelper.getDrawBounds(body, actualBounds);

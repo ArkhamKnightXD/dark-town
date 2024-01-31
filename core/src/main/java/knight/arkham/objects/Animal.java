@@ -32,7 +32,7 @@ public class Animal extends GameObject {
         );
     }
 
-    public void update(float deltaTime) {
+    protected void childUpdate(float deltaTime) {
 
         animationTimer += deltaTime;
 

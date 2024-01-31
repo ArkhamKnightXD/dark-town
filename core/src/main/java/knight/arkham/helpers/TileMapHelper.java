@@ -37,8 +37,7 @@ public class TileMapHelper {
     private final OrthogonalTiledMapRenderer mapRenderer;
     private final Player player;
     private Player alterPlayer;
-    private final Array<Enemy> enemies;
-    private final Array<Animal> animals;
+    private final Array<GameObject> gameObjects;
     private final Array<Checkpoint> checkpoints;
     private final Array<Door> doors;
     private final Array<Box> boxes;
@@ -64,8 +63,8 @@ public class TileMapHelper {
 
         saveGameData(new GameData("first", player.getWorldPosition()));
 
-        enemies = new Array<>();
-        animals = new Array<>();
+        gameObjects = new Array<>();
+
         checkpoints = new Array<>();
         doors = new Array<>();
         boxes = new Array<>();
@@ -96,19 +95,19 @@ public class TileMapHelper {
                 case "Enemies":
 
                     if (mapObject.getName().equals("blob"))
-                        enemies.add(new Enemy(mapRectangle, world, atlas.findRegion("enemy"), 2));
+                        gameObjects.add(new Enemy(mapRectangle, world, atlas.findRegion("enemy"), 2));
 
                     else
-                        enemies.add(new Enemy(mapRectangle, world, atlas.findRegion("snake"), 2));
+                        gameObjects.add(new Enemy(mapRectangle, world, atlas.findRegion("snake"), 2));
                     break;
 
                 case "Animals":
 
                     if (mapObject.getName().equals("cat"))
-                        animals.add(new Animal(mapRectangle, world, atlas.findRegion("cat"), 3));
+                        gameObjects.add(new Animal(mapRectangle, world, atlas.findRegion("cat"), 3));
 
                     else
-                        animals.add(new Animal(mapRectangle, world, atlas.findRegion("bats"), 2));
+                        gameObjects.add(new Animal(mapRectangle, world, atlas.findRegion("bats"), 2));
                     break;
 
                 case "Lights":
@@ -205,11 +204,8 @@ public class TileMapHelper {
 
         updateCameraPosition(camera);
 
-        for (Enemy enemy : enemies)
-            enemy.update(deltaTime);
-
-        for (Animal animal : animals)
-            animal.update(deltaTime);
+        for (GameObject gameObject : gameObjects)
+            gameObject.update(deltaTime);
 
         for (Checkpoint checkpoint : checkpoints)
             checkpoint.update(deltaTime);
@@ -260,11 +256,8 @@ public class TileMapHelper {
         player.draw(mapRenderer.getBatch());
         alterPlayer.draw(mapRenderer.getBatch());
 
-        for (Enemy enemy : enemies)
-            enemy.draw(mapRenderer.getBatch());
-
-        for (Animal animal : animals)
-            animal.draw(mapRenderer.getBatch());
+        for (GameObject gameObject : gameObjects)
+            gameObject.draw(mapRenderer.getBatch());
 
         for (Checkpoint checkpoint : checkpoints)
             checkpoint.draw(mapRenderer.getBatch());
@@ -295,11 +288,8 @@ public class TileMapHelper {
 //        If I make dispose of the rayHandler, I don't need to dispose of the lights.
         rayHandler.dispose();
 
-        for (Enemy enemy : enemies)
-            enemy.dispose();
-
-        for (Animal cat : animals)
-            cat.dispose();
+        for (GameObject gameObject : gameObjects)
+            gameObject.dispose();
 
         for (Checkpoint checkpoint : checkpoints)
             checkpoint.dispose();

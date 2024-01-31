@@ -73,7 +73,7 @@ public class Player extends GameObject {
         }
     }
 
-    public void update(float deltaTime) {
+    protected void childUpdate(float deltaTime) {
 
         getAnimationRegion(deltaTime);
 
