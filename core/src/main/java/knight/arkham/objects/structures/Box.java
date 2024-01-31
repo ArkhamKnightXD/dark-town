@@ -18,7 +18,7 @@ public class Box extends InteractiveStructure {
     @Override
     protected Fixture createFixture() {
         return Box2DHelper.createStaticFixture(
-            new Box2DBody(actualBounds, 50, actualWorld, this)
+            new Box2DBody(actualBounds, 20, actualWorld, this)
         );
     }
 }
