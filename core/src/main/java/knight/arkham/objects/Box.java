@@ -12,7 +12,6 @@ public class Box extends GameObject {
 
     public Box(Rectangle bounds, World world) {
         super(bounds, world, new TextureRegion(new Texture("images/box.png")));
-
     }
 
     @Override
