@@ -9,8 +9,8 @@ import com.badlogic.gdx.physics.box2d.Filter;
 import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
-import knight.arkham.helpers.Box2DHelper;
 
+import static knight.arkham.helpers.Box2DHelper.getDrawBounds;
 import static knight.arkham.helpers.Constants.DESTROYED_BIT;
 
 public abstract class InteractiveStructure {
@@ -31,11 +31,11 @@ public abstract class InteractiveStructure {
         regionWidth = region.getRegionWidth();
         regionHeight = region.getRegionHeight();
 
-        fixture = createFixture();
+        fixture = createObjectFixture();
         body = fixture.getBody();
     }
 
-    protected abstract Fixture createFixture();
+    protected abstract Fixture createObjectFixture();
 
     protected Animation<TextureRegion> makeAnimationByRegion(TextureRegion region) {
 
@@ -49,7 +49,7 @@ public abstract class InteractiveStructure {
 
     public void draw(Batch batch) {
 
-        Rectangle drawBounds = Box2DHelper.getDrawBounds(body, actualBounds);
+        Rectangle drawBounds = getDrawBounds(body, actualBounds);
 
         batch.draw(actualRegion, drawBounds.x, drawBounds.y, drawBounds.width, drawBounds.height);
     }
@@ -57,8 +57,8 @@ public abstract class InteractiveStructure {
     protected void collisionWithPlayer() {
 
         Filter filter = new Filter();
-
         filter.categoryBits = DESTROYED_BIT;
+
         fixture.setFilterData(filter);
     }
 

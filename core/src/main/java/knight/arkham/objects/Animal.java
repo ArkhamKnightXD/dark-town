@@ -7,7 +7,8 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.World;
 import knight.arkham.helpers.Box2DBody;
-import knight.arkham.helpers.Box2DHelper;
+
+import static knight.arkham.helpers.Box2DHelper.createBody;
 
 public class Animal extends GameObject {
     private final Animation<TextureRegion> animation;
@@ -25,9 +26,9 @@ public class Animal extends GameObject {
     }
 
     @Override
-    protected Body createBody() {
+    protected Body createObjectBody() {
 
-        return Box2DHelper.createBody(
+        return createBody(
             new Box2DBody(actualBounds, 0, actualWorld, this)
         );
     }

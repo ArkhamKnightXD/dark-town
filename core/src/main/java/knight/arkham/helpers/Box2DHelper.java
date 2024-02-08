@@ -13,7 +13,7 @@ import static knight.arkham.helpers.Constants.*;
 
 public class Box2DHelper {
 
-    public static Fixture createStaticFixture(Box2DBody box2DBody){
+    public static Fixture createFixture(Box2DBody box2DBody){
 
         PolygonShape shape = new PolygonShape();
 
@@ -21,11 +21,6 @@ public class Box2DHelper {
 
         if (box2DBody.userData instanceof Checkpoint)
             fixtureDef.filter.categoryBits = CHECKPOINT_BIT;
-
-        else if (box2DBody.userData instanceof Door) {
-            fixtureDef.filter.categoryBits = DOOR_BIT;
-            fixtureDef.isSensor = true;
-        }
 
         else
             fixtureDef.filter.categoryBits = STOP_ENEMY_BIT;
@@ -71,6 +66,13 @@ public class Box2DHelper {
         else if (box2DBody.userData instanceof Animal) {
 
             fixtureDef.filter.categoryBits = ANIMAL_BIT;
+            body.createFixture(fixtureDef);
+        }
+
+        else if (box2DBody.userData instanceof Door) {
+
+            fixtureDef.filter.categoryBits = DOOR_BIT;
+            fixtureDef.isSensor = true;
 
             body.createFixture(fixtureDef);
         }

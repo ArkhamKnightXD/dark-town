@@ -141,7 +141,7 @@ public class TileMapHelper {
 
                 case "Enemy-Stopper":
 //                    Since I don't need the userData of this body, it could be null.
-                    Box2DHelper.createStaticFixture(new Box2DBody(mapRectangle, world, null));
+                    Box2DHelper.createFixture(new Box2DBody(mapRectangle, world, null));
                     break;
 
                 default:

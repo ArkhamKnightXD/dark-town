@@ -8,7 +8,8 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
-import knight.arkham.helpers.Box2DHelper;
+
+import static knight.arkham.helpers.Box2DHelper.getDrawBounds;
 
 public abstract class GameObject {
     protected final Rectangle actualBounds;
@@ -27,10 +28,10 @@ public abstract class GameObject {
         regionWidth = region.getRegionWidth();
         regionHeight = region.getRegionHeight();
 
-        body = createBody();
+        body = createObjectBody();
     }
 
-    protected abstract Body createBody();
+    protected abstract Body createObjectBody();
 
     protected abstract void childUpdate(float deltaTime);
 
@@ -41,7 +42,7 @@ public abstract class GameObject {
 
     public void draw(Batch batch) {
 
-        Rectangle drawBounds = Box2DHelper.getDrawBounds(body, actualBounds);
+        Rectangle drawBounds = getDrawBounds(body, actualBounds);
 
         batch.draw(actualRegion, drawBounds.x, drawBounds.y, drawBounds.width, drawBounds.height);
     }

@@ -11,10 +11,10 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.World;
 import knight.arkham.helpers.Box2DBody;
-import knight.arkham.helpers.Box2DHelper;
 import knight.arkham.helpers.GameDataHelper;
 
 import static knight.arkham.helpers.AssetsHelper.loadSound;
+import static knight.arkham.helpers.Box2DHelper.createBody;
 import static knight.arkham.helpers.Constants.PIXELS_PER_METER;
 
 public class Player extends GameObject {
@@ -52,9 +52,9 @@ public class Player extends GameObject {
     }
 
     @Override
-    protected Body createBody() {
+    protected Body createObjectBody() {
 
-        return Box2DHelper.createBody(
+        return createBody(
             new Box2DBody(actualBounds, 10, actualWorld, this)
         );
     }
