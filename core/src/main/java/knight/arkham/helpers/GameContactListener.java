@@ -44,11 +44,17 @@ public class GameContactListener implements ContactListener {
 
             case PLAYER_BIT | ENEMY_BIT:
 
-                if (fixtureA.getFilterData().categoryBits == PLAYER_BIT)
-                    ((Player) fixtureA.getUserData()).hitByEnemy();
+                if (fixtureA.getFilterData().categoryBits == PLAYER_BIT) {
 
-                else
+                    ((Player) fixtureA.getUserData()).hitByEnemy();
+                    ((Enemy) fixtureB.getUserData()).changeDirection();
+                }
+
+                else {
+
                     ((Player) fixtureB.getUserData()).hitByEnemy();
+                    ((Enemy) fixtureA.getUserData()).changeDirection();
+                }
                 break;
 
             case ENEMY_BIT | STOP_ENEMY_BIT:

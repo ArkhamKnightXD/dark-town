@@ -262,7 +262,7 @@ public class TileMapHelper {
 
         mapRenderer.getBatch().end();
 
-//        debugRenderer.render(world, camera.combined);
+        debugRenderer.render(world, camera.combined);
 
         if (!isAlterPlayerActive) {
             rayHandler.setCombinedMatrix(camera);
