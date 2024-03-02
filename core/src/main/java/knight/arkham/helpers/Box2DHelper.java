@@ -17,7 +17,7 @@ public class Box2DHelper {
 
         PolygonShape shape = new PolygonShape();
 
-        FixtureDef fixtureDef = createStandardFixtureDef(box2DBody, shape);
+        FixtureDef fixtureDef = createBoxFixtureDef(box2DBody, shape);
 
         if (box2DBody.userData instanceof Checkpoint)
             fixtureDef.filter.categoryBits = CHECKPOINT_BIT;
@@ -53,7 +53,7 @@ public class Box2DHelper {
 
         PolygonShape shape = new PolygonShape();
 
-        FixtureDef fixtureDef = createStandardFixtureDef(box2DBody, shape);
+        FixtureDef fixtureDef = createBoxFixtureDef(box2DBody, shape);
 
         Body body = createBox2DBodyByType(box2DBody);
 
@@ -89,7 +89,7 @@ public class Box2DHelper {
         return body;
     }
 
-    private static FixtureDef createStandardFixtureDef(Box2DBody box2DBody, PolygonShape shape) {
+    private static FixtureDef createBoxFixtureDef(Box2DBody box2DBody, PolygonShape shape) {
 
         shape.setAsBox(box2DBody.bounds.width / 2 / PIXELS_PER_METER, box2DBody.bounds.height / 2 / PIXELS_PER_METER);
 

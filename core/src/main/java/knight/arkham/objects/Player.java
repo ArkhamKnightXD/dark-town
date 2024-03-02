@@ -13,6 +13,7 @@ import com.badlogic.gdx.physics.box2d.World;
 import knight.arkham.helpers.Box2DBody;
 import knight.arkham.helpers.GameDataHelper;
 
+import static knight.arkham.helpers.AnimationHelper.makeAnimation;
 import static knight.arkham.helpers.AssetsHelper.loadSound;
 import static knight.arkham.helpers.Box2DHelper.createBody;
 import static knight.arkham.helpers.Constants.PIXELS_PER_METER;
@@ -43,9 +44,9 @@ public class Player extends GameObject {
 
         jumpingRegion = new TextureRegion(atlas.findRegion("jumping"), 0, 0, 16, 22);
 
-        standingAnimation = makeAnimationByRegion(atlas.findRegion("smoking"), 6, 0.2f);
-        runningAnimation = makeAnimationByRegion(atlas.findRegion("walking"), 8, 0.1f);
-        dyingAnimation = makeAnimationByRegion(atlas.findRegion("dying"), 8, 0.1f);
+        standingAnimation = makeAnimation(atlas.findRegion("smoking"), 16, 22, 6, 0.2f);
+        runningAnimation = makeAnimation(atlas.findRegion("walking"), 16, 22, 8, 0.1f);
+        dyingAnimation = makeAnimation(atlas.findRegion("dying"), 16, 22, 8, 0.1f);
 
         jumpSound = loadSound("magic.wav");
         deathSound = loadSound("fall.wav");

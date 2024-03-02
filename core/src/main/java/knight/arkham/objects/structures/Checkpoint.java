@@ -9,10 +9,11 @@ import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.World;
 import knight.arkham.helpers.Box2DBody;
 import knight.arkham.helpers.GameData;
-import knight.arkham.helpers.GameDataHelper;
 
+import static knight.arkham.helpers.AnimationHelper.makeAnimation;
 import static knight.arkham.helpers.AssetsHelper.loadSound;
 import static knight.arkham.helpers.Box2DHelper.createFixture;
+import static knight.arkham.helpers.GameDataHelper.saveGameData;
 
 public class Checkpoint extends InteractiveStructure {
     private final Animation<TextureRegion> animation;
@@ -28,7 +29,7 @@ public class Checkpoint extends InteractiveStructure {
             )
         );
 
-        animation = makeAnimationByRegion(region);
+        animation = makeAnimation(region, frameWidth, frameHeight, 2, 0.5f);
 
         activationSound = loadSound("okay.wav");
     }
@@ -56,7 +57,7 @@ public class Checkpoint extends InteractiveStructure {
 
         isActive = true;
 
-        GameDataHelper.saveGameData(new GameData("FirstScreen", body.getPosition()));
+        saveGameData(new GameData("FirstScreen", body.getPosition()));
     }
 
     @Override
