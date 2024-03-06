@@ -29,6 +29,6 @@
   <object id="1" x="3" y="288.333" width="218.333" height="32.3333"/>
  </objectgroup>
  <objectgroup id="3" name="Alter-Player">
-  <object id="3" x="170.667" y="260" width="32" height="25.6667"/>
+  <object id="3" x="170.667" y="260" width="32" height="32"/>
  </objectgroup>
 </map>
