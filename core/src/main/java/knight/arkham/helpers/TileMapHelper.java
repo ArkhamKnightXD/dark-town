@@ -1,8 +1,5 @@
 package knight.arkham.helpers;
 
-import box2dLight.ConeLight;
-import box2dLight.PointLight;
-import box2dLight.RayHandler;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -32,7 +29,6 @@ public class TileMapHelper {
     private final TiledMap tiledMap;
     private final TextureAtlas atlas;
     private final World world;
-    private final RayHandler rayHandler;
     private final Box2DDebugRenderer debugRenderer;
     private final OrthogonalTiledMapRenderer mapRenderer;
     private final Player player;
@@ -40,11 +36,9 @@ public class TileMapHelper {
     private final Array<GameObject> gameObjects;
     private final Array<Checkpoint> checkpoints;
     private final Array<Door> doors;
-    private final Array<ConeLight> coneLights;
-    private final Array<PointLight> pointLights;
-    private float lightsTimer;
     private float accumulator;
     private boolean isAlterPlayerActive;
+    private final LightHelper lightHelper;
     public static boolean canChangePlayer;
 
     public TileMapHelper(String mapFilePath, String atlasFilePath) {
@@ -55,8 +49,7 @@ public class TileMapHelper {
         world = new World(new Vector2(0, -40), true);
         world.setContactListener(new GameContactListener());
 
-        rayHandler = new RayHandler(world);
-        rayHandler.setAmbientLight(.2f);
+        lightHelper = new LightHelper(world, .2f);
 
         player = new Player(new Rectangle(20, 65, 32, 32), world, atlas);
 
@@ -66,9 +59,6 @@ public class TileMapHelper {
 
         checkpoints = new Array<>();
         doors = new Array<>();
-
-        coneLights = new Array<>();
-        pointLights = new Array<>();
 
         mapRenderer = setupMap();
         debugRenderer = new Box2DDebugRenderer();
@@ -113,10 +103,10 @@ public class TileMapHelper {
                     Vector2 lightPosition = new Vector2(mapRectangle.x, mapRectangle.y);
 
                     if (mapObject.getName().equals("cone"))
-                        coneLights.add(LightHelper.createConeLight(rayHandler, lightPosition));
+                        lightHelper.createConeLight(lightPosition);
 
                     else
-                        pointLights.add(LightHelper.createPointLight(rayHandler, lightPosition));
+                        lightHelper.createPointLight(lightPosition);
                     break;
 
                 case "Checkpoints":
@@ -189,9 +179,6 @@ public class TileMapHelper {
 
     public void update(float deltaTime, OrthographicCamera camera) {
 
-        //I also have call the rayHandler update method for everything to work accordingly.
-        rayHandler.update();
-
         if (canChangePlayer && Gdx.input.isKeyJustPressed(Input.Keys.W))
             isAlterPlayerActive = !isAlterPlayerActive;
 
@@ -208,23 +195,7 @@ public class TileMapHelper {
         for (Checkpoint checkpoint : checkpoints)
             checkpoint.update(deltaTime);
 
-        for (PointLight light : pointLights) {
-
-            Vector2 lightPosition = light.getPosition().scl(PIXELS_PER_METER);
-
-            if (lightPosition.dst(player.getPixelPosition()) < 80 && Gdx.input.isKeyJustPressed(Input.Keys.W))
-                light.setActive(!light.isActive());
-        }
-
-        lightsTimer += deltaTime;
-
-        if (lightsTimer > 2) {
-
-            lightsTimer = 0;
-
-            for (ConeLight light : coneLights)
-                light.setActive(!light.isActive());
-        }
+        lightHelper.update(deltaTime, player);
 
         doPhysicsTimeStep(deltaTime);
     }
@@ -264,11 +235,7 @@ public class TileMapHelper {
 
         debugRenderer.render(world, camera.combined);
 
-        if (!isAlterPlayerActive) {
-            rayHandler.setCombinedMatrix(camera);
-            //The render method of the rayHandler should be put after all the others objects
-            rayHandler.render();
-        }
+        lightHelper.draw(camera, isAlterPlayerActive);
     }
 
     public void dispose(){
@@ -279,9 +246,7 @@ public class TileMapHelper {
         mapRenderer.dispose();
         world.dispose();
         debugRenderer.dispose();
-
-//        If I make dispose of the rayHandler, I don't need to dispose of the lights.
-        rayHandler.dispose();
+        lightHelper.dispose();
 
         for (GameObject gameObject : gameObjects)
             gameObject.dispose();
