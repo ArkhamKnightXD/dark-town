@@ -215,7 +215,6 @@ public class TileMapHelper {
     public void draw(OrthographicCamera camera){
 
         mapRenderer.setView(camera);
-
         mapRenderer.render();
 
         mapRenderer.getBatch().setProjectionMatrix(camera.combined);
@@ -233,9 +232,9 @@ public class TileMapHelper {
 
         mapRenderer.getBatch().end();
 
-        debugRenderer.render(world, camera.combined);
-
         lightHelper.draw(camera, isAlterPlayerActive);
+
+//        debugRenderer.render(world, camera.combined);
     }
 
     public void dispose(){
