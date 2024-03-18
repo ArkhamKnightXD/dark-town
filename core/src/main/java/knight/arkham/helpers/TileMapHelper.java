@@ -21,6 +21,7 @@ import knight.arkham.objects.Box;
 import knight.arkham.objects.structures.Checkpoint;
 import knight.arkham.objects.structures.Door;
 
+import static knight.arkham.helpers.CameraController.controlCameraPosition;
 import static knight.arkham.helpers.Constants.PIXELS_PER_METER;
 import static knight.arkham.helpers.Constants.TIME_STEP;
 import static knight.arkham.helpers.GameDataHelper.saveGameData;
@@ -38,6 +39,8 @@ public class TileMapHelper {
     private final Array<Door> doors;
     private float accumulator;
     private boolean isAlterPlayerActive;
+    public boolean isDebugCameraActive;
+
     private final LightHelper lightHelper;
     public static boolean canChangePlayer;
 
@@ -149,34 +152,6 @@ public class TileMapHelper {
         );
     }
 
-    public void updateCameraPosition(OrthographicCamera camera) {
-
-        if (Gdx.input.isKeyPressed(Input.Keys.RIGHT))
-            camera.position.x += 0.1f;
-
-        if (Gdx.input.isKeyPressed(Input.Keys.LEFT))
-            camera.position.x -= 0.1f;
-
-        if (Gdx.input.isKeyPressed(Input.Keys.UP))
-            camera.position.y += 0.1f;
-
-        if (Gdx.input.isKeyPressed(Input.Keys.DOWN))
-            camera.position.y -= 0.1f;
-
-        if (Gdx.input.isKeyJustPressed(Input.Keys.F3))
-            camera.zoom += 0.1f;
-
-        if (Gdx.input.isKeyJustPressed(Input.Keys.F4))
-            camera.zoom -= 0.1f;
-
-        if (isAlterPlayerActive)
-            camera.position.set(alterPlayer.getWorldPosition().x, 5.2f, 0);
-        else
-            camera.position.set(player.getWorldPosition().x, 5.2f, 0);
-
-        camera.update();
-    }
-
     public void update(float deltaTime, OrthographicCamera camera) {
 
         if (canChangePlayer && Gdx.input.isKeyJustPressed(Input.Keys.W))
@@ -187,7 +162,20 @@ public class TileMapHelper {
         else
             player.update(deltaTime);
 
-        updateCameraPosition(camera);
+        controlCameraPosition(camera);
+
+        if (Gdx.input.isKeyJustPressed(Input.Keys.F5))
+            isDebugCameraActive = !isDebugCameraActive;
+
+        if (!isDebugCameraActive) {
+
+            if (isAlterPlayerActive)
+                camera.position.set(alterPlayer.getWorldPosition().x, 5.2f, 0);
+            else
+                camera.position.set(player.getWorldPosition().x, 5.2f, 0);
+        }
+
+        camera.update();
 
         for (GameObject gameObject : gameObjects)
             gameObject.update(deltaTime);
