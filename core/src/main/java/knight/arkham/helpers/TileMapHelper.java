@@ -40,7 +40,6 @@ public class TileMapHelper {
     private float accumulator;
     private boolean isAlterPlayerActive;
     public boolean isDebugCameraActive;
-
     private final LightHelper lightHelper;
     public static boolean canChangePlayer;
 
