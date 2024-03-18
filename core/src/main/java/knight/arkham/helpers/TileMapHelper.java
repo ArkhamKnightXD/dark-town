@@ -103,10 +103,10 @@ public class TileMapHelper {
                     Vector2 lightPosition = new Vector2(mapRectangle.x, mapRectangle.y);
 
                     if (mapObject.getName().equals("cone"))
-                        lightHelper.createConeLight(lightPosition);
+                        lightHelper.createConeLight(lightPosition, -90, 30);
 
                     else
-                        lightHelper.createPointLight(lightPosition);
+                        lightHelper.createPointLight(lightPosition, 5);
                     break;
 
                 case "Checkpoints":

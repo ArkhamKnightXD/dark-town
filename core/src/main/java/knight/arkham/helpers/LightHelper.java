@@ -20,29 +20,29 @@ public class LightHelper {
     private final Array<PointLight> pointLights;
     private float lightsTimer;
 
-    public LightHelper(World world, float ambientLight) {
+    public LightHelper(World world, float ambientLightIntensity) {
 
         rayHandler = new RayHandler(world);
-        rayHandler.setAmbientLight(.2f);
+        rayHandler.setAmbientLight(ambientLightIntensity);
 
         coneLights = new Array<>();
         pointLights = new Array<>();
     }
 
-    public void createConeLight(Vector2 position) {
+    public void createConeLight(Vector2 position, float directionDegree, float coneDegree) {
 
         position.scl(1 / PIXELS_PER_METER);
 
-        ConeLight coneLight = new ConeLight(rayHandler, 10, WHITE, 10, position.x, position.y, -90, 30);
+        ConeLight coneLight = new ConeLight(rayHandler, 10, WHITE, 10, position.x, position.y, directionDegree, coneDegree);
 
         coneLights.add(coneLight);
     }
 
-    public void createPointLight(Vector2 position) {
+    public void createPointLight(Vector2 position, float distance) {
 
         position.scl(1 / PIXELS_PER_METER);
 
-        PointLight pointLight = new PointLight(rayHandler, 10, WHITE, 5, position.x, position.y);
+        PointLight pointLight = new PointLight(rayHandler, 10, WHITE, distance, position.x, position.y);
 
         pointLights.add(pointLight);
     }
