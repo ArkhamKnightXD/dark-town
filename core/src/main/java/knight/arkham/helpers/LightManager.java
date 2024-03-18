@@ -14,13 +14,13 @@ import knight.arkham.objects.Player;
 import static com.badlogic.gdx.graphics.Color.WHITE;
 import static knight.arkham.helpers.Constants.PIXELS_PER_METER;
 
-public class LightHelper {
+public class LightManager {
     public final RayHandler rayHandler;
     private final Array<ConeLight> coneLights;
     private final Array<PointLight> pointLights;
     private float lightsTimer;
 
-    public LightHelper(World world, float ambientLightIntensity) {
+    public LightManager(World world, float ambientLightIntensity) {
 
         rayHandler = new RayHandler(world);
         rayHandler.setAmbientLight(ambientLightIntensity);
