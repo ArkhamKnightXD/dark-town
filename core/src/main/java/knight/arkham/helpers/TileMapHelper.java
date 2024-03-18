@@ -33,11 +33,11 @@ public class TileMapHelper {
     private final OrthogonalTiledMapRenderer mapRenderer;
     private final Player player;
     private Player alterPlayer;
+    private final LightManager lightManager;
+    private final WorldObjectManager worldObjects;
     private float accumulator;
     private boolean isAlterPlayerActive;
     public boolean isDebugCameraActive;
-    private final LightManager lightManager;
-    private final WorldObjectManager worldObjects;
     public static boolean canChangePlayer;
 
     public TileMapHelper(String mapFilePath, String atlasFilePath) {
@@ -80,7 +80,6 @@ public class TileMapHelper {
 
                     if (mapObject.getName().equals("blob"))
                         worldObjects.createGameObject(new Enemy(mapRectangle, world, atlas.findRegion("enemy"), 2));
-
                     else
                         worldObjects.createGameObject(new Enemy(mapRectangle, world, atlas.findRegion("snake"), 2));
                     break;
@@ -89,7 +88,6 @@ public class TileMapHelper {
 
                     if (mapObject.getName().equals("cat"))
                         worldObjects.createGameObject(new Animal(mapRectangle, world, atlas.findRegion("cat"), 3));
-
                     else
                         worldObjects.createGameObject(new Animal(mapRectangle, world, atlas.findRegion("bats"), 2));
                     break;
@@ -100,33 +98,27 @@ public class TileMapHelper {
 
                     if (mapObject.getName().equals("cone"))
                         lightManager.createConeLight(lightPosition, -90, 30);
-
                     else
                         lightManager.createPointLight(lightPosition, 5);
                     break;
 
                 case "Checkpoints":
-
                     worldObjects.createCheckpoint(new Checkpoint(mapRectangle, world, atlas.findRegion("checkpoint")));
                     break;
 
                 case "Doors":
-
                     new Door(mapRectangle, world);
                     break;
 
                 case "Boxes":
-
                     worldObjects.createGameObject(new Box(mapRectangle, world));
                     break;
 
                 case "Alter-Player":
-
                     alterPlayer = new Player(mapRectangle, world, atlas);
                     break;
-
+//                    Since I don't need the userData of these bodies, the userData could be null.
                 case "Enemy-Stopper":
-//                    Since I don't need the userData of this body, it could be null.
                     Box2DHelper.createFixture(new Box2DBody(mapRectangle, world, null));
                     break;
 
@@ -206,7 +198,6 @@ public class TileMapHelper {
         mapRenderer.getBatch().end();
 
         lightManager.draw(camera, isAlterPlayerActive);
-
 //        debugRenderer.render(world, camera.combined);
     }
 
@@ -219,7 +210,6 @@ public class TileMapHelper {
         world.dispose();
         debugRenderer.dispose();
         lightManager.dispose();
-
         worldObjects.dispose();
     }
 }
