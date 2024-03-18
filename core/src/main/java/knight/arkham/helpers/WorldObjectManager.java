@@ -15,12 +15,10 @@ public class WorldObjectManager {
     }
 
     public void createGameObject(GameObject gameObject) {
-
         gameObjects.add(gameObject);
     }
 
     public void createCheckpoint(Checkpoint checkpoint) {
-
         checkpoints.add(checkpoint);
     }
 
