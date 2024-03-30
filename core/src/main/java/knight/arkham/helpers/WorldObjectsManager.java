@@ -5,11 +5,11 @@ import com.badlogic.gdx.utils.Array;
 import knight.arkham.objects.GameObject;
 import knight.arkham.objects.structures.Checkpoint;
 
-public class WorldObjectManager {
+public class WorldObjectsManager {
     private final Array<GameObject> gameObjects;
     private final Array<Checkpoint> checkpoints;
 
-    public WorldObjectManager() {
+    public WorldObjectsManager() {
         gameObjects = new Array<>();
         checkpoints = new Array<>();
     }

@@ -34,7 +34,7 @@ public class TileMapHelper {
     private final Player player;
     private Player alterPlayer;
     private final LightManager lightManager;
-    private final WorldObjectManager worldObjects;
+    private final WorldObjectsManager worldObjects;
     private float accumulator;
     private boolean isAlterPlayerActive;
     public boolean isDebugCameraActive;
@@ -54,7 +54,7 @@ public class TileMapHelper {
 
         saveGameData(new GameData("first", player.getWorldPosition()));
 
-        worldObjects = new WorldObjectManager();
+        worldObjects = new WorldObjectsManager();
 
         mapRenderer = setupMap();
         debugRenderer = new Box2DDebugRenderer();
@@ -191,7 +191,9 @@ public class TileMapHelper {
         mapRenderer.getBatch().begin();
 
         player.draw(mapRenderer.getBatch());
-        alterPlayer.draw(mapRenderer.getBatch());
+
+        if (alterPlayer != null)
+            alterPlayer.draw(mapRenderer.getBatch());
 
         worldObjects.draw(mapRenderer.getBatch());
 
